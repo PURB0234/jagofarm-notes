@@ -1,15 +1,24 @@
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
-const supabaseUrl =
+const rawUrl =
   (import.meta.env.VITE_SUPABASE_URL as string) ||
   (import.meta.env.NEXT_PUBLIC_SUPABASE_URL as string) ||
   "";
 
-const supabaseAnonKey =
+const rawKey =
   (import.meta.env.VITE_SUPABASE_ANON_KEY as string) ||
   (import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string) ||
   (import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY as string) ||
   "";
+
+if (!rawUrl || !rawKey) {
+  console.warn(
+    "[JagoFarm Notes] Supabase URL atau Anon Key belum terdeteksi di build! Pastikan VITE_SUPABASE_URL dan VITE_SUPABASE_ANON_KEY telah diset saat 'npm run build'."
+  );
+}
+
+const supabaseUrl = rawUrl || "https://placeholder.supabase.co";
+const supabaseAnonKey = rawKey || "placeholder-anon-key";
 
 export const SITE_URL =
   (import.meta.env.VITE_SITE_URL as string) ||
