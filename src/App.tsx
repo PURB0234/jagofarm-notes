@@ -4,6 +4,8 @@ import { WorkspaceLayout, AdminRoute } from "@/components/layout/WorkspaceLayout
 
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
+import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
+import ResetPasswordPage from "@/pages/ResetPasswordPage";
 import AuthCallbackPage from "@/pages/AuthCallbackPage";
 import BerandaPage from "@/pages/BerandaPage";
 import CatatanPekerjaanPage from "@/pages/CatatanPekerjaanPage";
@@ -17,6 +19,8 @@ export default function App() {
           {/* Public Auth Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/auth/callback" element={<AuthCallbackPage />} />
 
           {/* Protected Workspace Routes */}

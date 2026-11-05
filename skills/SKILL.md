@@ -67,6 +67,9 @@ src/
 │   │   └── parts/             # MemberPicker, DateRangePicker, FileUploader
 │   └── ui/                    # Primitif UI atomik (Button, Card, Select, Badge, SegmentedControl)
 ├── features/
+│   ├── beranda/
+│   │   ├── hooks/             # useBerandaData (Fetch jadwal, profiles & realtime)
+│   │   └── components/        # BerandaHero, BerandaMetrics, BerandaTugasAktif, BerandaCatatanTerbaru, BerandaJadwalHariIni, BerandaTimOverview
 │   └── catatan-pekerjaan/
 │       └── components/
 │           ├── feed/          # CatatanList, CatatanDetail, CatatanHeader
@@ -74,7 +77,7 @@ src/
 │           ├── gantt/         # GanttChartTim, GanttToolbar, GanttGrid, GanttTaskBar, GanttMetadataCol
 │           ├── filter/        # TimelineFilterBar (Komponen filter bersama)
 │           └── print/         # LaporanPdfPrint (Cetak dokumen A4)
-├── pages/                     # LoginPage, RegisterPage, AuthCallbackPage, BerandaPage, CatatanPekerjaanPage, AdminPage
+├── pages/                     # LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, AuthCallbackPage, BerandaPage, CatatanPekerjaanPage, AdminPage
 ├── App.tsx                    # Routing terpusat (React Router v7)
 ├── main.tsx                   # Entry point aplikasi
 └── index.css                  # Tailwind v4 styles & CSS variables

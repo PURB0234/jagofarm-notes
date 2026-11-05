@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createClient } from "@/lib/supabase";
+
+const REMEMBER_KEY = "jagofarm_remember_login";
 
 export default function LoginPage() {
     const supabase = createClient();
@@ -8,8 +10,24 @@ export default function LoginPage() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [rememberMe, setRememberMe] = useState(true);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+
+    // Ambil data Remember Me saat halaman dibuka
+    useEffect(() => {
+        try {
+            const saved = localStorage.getItem(REMEMBER_KEY);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                if (parsed.email) setEmail(parsed.email);
+                if (parsed.password) setPassword(parsed.password);
+                setRememberMe(Boolean(parsed.remember));
+            }
+        } catch {
+            // Abaikan jika format localStorage tidak valid
+        }
+    }, []);
 
     async function handleEmailLogin(
         event: React.FormEvent<HTMLFormElement>
@@ -28,6 +46,16 @@ export default function LoginPage() {
         if (error) {
             setError("Login gagal. Periksa email dan password.");
             return;
+        }
+
+        // Simpan atau bersihkan data login Remember Me
+        if (rememberMe) {
+            localStorage.setItem(
+                REMEMBER_KEY,
+                JSON.stringify({ email, password, remember: true })
+            );
+        } else {
+            localStorage.removeItem(REMEMBER_KEY);
         }
 
         navigate("/beranda");
@@ -64,9 +92,17 @@ export default function LoginPage() {
                     </div>
 
                     <div>
-                        <label htmlFor="password" className="mb-2 block text-sm">
-                            Password
-                        </label>
+                        <div className="flex items-center justify-between mb-2">
+                            <label htmlFor="password" className="block text-sm">
+                                Password
+                            </label>
+                            <Link
+                                to="/forgot-password"
+                                className="text-xs text-green-400 hover:text-green-300 transition-colors"
+                            >
+                                Lupa kata sandi?
+                            </Link>
+                        </div>
                         <input
                             id="password"
                             type="password"
@@ -79,6 +115,19 @@ export default function LoginPage() {
                         />
                     </div>
 
+                    {/* Checkbox Ingat Saya (Remember Me) */}
+                    <div className="flex items-center justify-between pt-1">
+                        <label className="flex items-center gap-2 text-xs text-gray-300 cursor-pointer select-none">
+                            <input
+                                type="checkbox"
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMe(e.target.checked)}
+                                className="w-4 h-4 rounded border-gray-700 bg-black/30 text-green-600 focus:ring-green-500 accent-green-600 cursor-pointer"
+                            />
+                            <span>Ingat saya di perangkat ini</span>
+                        </label>
+                    </div>
+
                     {error && (
                         <p role="alert" className="text-sm text-red-400">
                             {error}
@@ -88,7 +137,7 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full rounded-lg bg-green-600 px-4 py-3 font-semibold transition hover:bg-green-500 disabled:opacity-50 cursor-pointer"
+                        className="w-full rounded-lg bg-green-600 px-4 py-3 font-semibold transition hover:bg-green-500 disabled:opacity-50 cursor-pointer shadow-2xs"
                     >
                         {loading ? "Memproses..." : "Masuk"}
                     </button>
