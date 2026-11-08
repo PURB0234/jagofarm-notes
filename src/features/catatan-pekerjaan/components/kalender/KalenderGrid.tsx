@@ -42,9 +42,9 @@ export default function KalenderGrid({
     onDeleteTask,
 }: KalenderGridProps) {
     return (
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-2xs">
+        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-2xs dark:bg-[#141c19] dark:border-[#1e2d27]">
             <div className="overflow-x-auto">
-                <div className="grid grid-cols-7 min-w-[960px] divide-x divide-gray-200">
+                <div className="grid grid-cols-7 min-w-[960px] divide-x divide-gray-200 dark:divide-[#1e2d27]">
                     {weekDays.map((day) => {
                         const [dayY, dayM] = day.iso.split("-").map(Number);
                         const isPastMonth =
@@ -73,29 +73,29 @@ export default function KalenderGrid({
                                 key={day.iso}
                                 className={`flex flex-col min-h-[460px] transition ${
                                     isPastMonth
-                                        ? "bg-gray-100/60 opacity-60"
+                                        ? "bg-gray-100/60 dark:bg-[#0c1210]/60 opacity-60"
                                         : day.isToday && displayedTasks.length > 0
-                                        ? "bg-slate-50/50"
-                                        : "bg-white"
+                                        ? "bg-slate-50/50 dark:bg-[#131f19]/60"
+                                        : "bg-white dark:bg-[#141c19]"
                                 }`}
                             >
                                 {/* Header Tanggal */}
                                 <div
-                                    className={`p-3 border-b border-gray-200 flex items-start justify-between ${
+                                    className={`p-3 border-b border-gray-200 dark:border-[#1e2d27] flex items-start justify-between ${
                                         isPastMonth
-                                            ? "bg-gray-200/50"
+                                            ? "bg-gray-200/50 dark:bg-[#0a0f0d]"
                                             : day.isToday && displayedTasks.length > 0
-                                            ? "bg-slate-100/70"
-                                            : "bg-slate-50/70"
+                                            ? "bg-slate-100/70 dark:bg-[#172720]"
+                                            : "bg-slate-50/70 dark:bg-[#101915]"
                                     }`}
                                 >
                                     <div>
-                                        <span className="text-[10px] font-semibold text-gray-500 tracking-wider uppercase block">
+                                        <span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 tracking-wider uppercase block">
                                             {day.hari}
                                         </span>
-                                        <span className="text-sm font-bold text-gray-900 mt-0.5 flex items-baseline gap-1">
+                                        <span className="text-sm font-bold text-gray-900 dark:text-white mt-0.5 flex items-baseline gap-1">
                                             <span>{day.tanggal}</span>
-                                            <span className="text-[11px] font-medium text-gray-500">
+                                            <span className="text-[11px] font-medium text-gray-500 dark:text-gray-400">
                                                 {day.bulanShort}
                                             </span>
                                         </span>
@@ -115,7 +115,7 @@ export default function KalenderGrid({
                                             <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
                                         </div>
                                     ) : displayedTasks.length === 0 ? (
-                                        <div className="flex-1 flex flex-col items-center justify-center p-3 text-center border border-dashed border-gray-200 rounded-lg text-gray-400 text-xs mt-2">
+                                        <div className="flex-1 flex flex-col items-center justify-center p-3 text-center border border-dashed border-gray-200 dark:border-[#1e2d27] rounded-lg text-gray-400 dark:text-gray-500 text-xs mt-2">
                                             <span>Tidak ada agenda</span>
                                         </div>
                                     ) : (

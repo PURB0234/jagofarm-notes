@@ -294,28 +294,28 @@ export default function ModalEditKegiatan({
 
     return (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/50 backdrop-blur-2xs">
-            <div className="bg-white rounded-t-2xl sm:rounded-2xl border border-gray-200 shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in duration-150">
+            <div className="bg-white dark:bg-[#141c19] rounded-t-2xl sm:rounded-2xl border border-gray-200 dark:border-[#1e2d27] shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in duration-150">
                 {/* Header */}
-                <header className="flex items-start justify-between p-4 sm:p-5 border-b border-gray-100 bg-slate-50/50">
+                <header className="flex items-start justify-between p-4 sm:p-5 border-b border-gray-100 dark:border-[#1e2d27] bg-slate-50/50 dark:bg-[#101915]">
                     <div className="flex items-center gap-3">
                         <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center shrink-0">
                             <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                         <div>
                             <div className="flex items-center gap-2">
-                                <h2 className="text-sm sm:text-base font-bold text-gray-900">Edit Catatan & Kegiatan</h2>
-                                <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-gray-200 bg-gray-100 text-gray-600 font-bold uppercase">
+                                <h2 className="text-sm sm:text-base font-bold text-gray-900 dark:text-white">Edit Catatan & Kegiatan</h2>
+                                <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-gray-200 dark:border-[#273830] bg-gray-100 dark:bg-[#0e1613] text-gray-600 dark:text-gray-300 font-bold uppercase">
                                     ID-{activeItem.id.slice(0, 8).toUpperCase()}
                                 </span>
                             </div>
-                            <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
+                            <p className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                                 Perubahan data otomatis tersinkron ke seluruh modul sistem.
                             </p>
                         </div>
                     </div>
                     <button
                         onClick={onClose}
-                        className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition cursor-pointer"
+                        className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-800 rounded-lg transition cursor-pointer"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -325,7 +325,7 @@ export default function ModalEditKegiatan({
                 <form id="form-edit-kegiatan" onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto space-y-4 text-xs">
                     {/* Judul Kegiatan */}
                     <div>
-                        <label className="block font-bold text-gray-800 mb-1.5">
+                        <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">
                             Judul / Nama Kegiatan <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -333,7 +333,7 @@ export default function ModalEditKegiatan({
                             required
                             value={namaKegiatan}
                             onChange={(e) => setNamaKegiatan(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                            className="w-full px-3 py-2 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
                         />
                     </div>
 
@@ -361,7 +361,7 @@ export default function ModalEditKegiatan({
 
                     {/* Lokasi */}
                     <div>
-                        <label className="block font-bold text-gray-800 mb-1.5">
+                        <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">
                             Lokasi / Fasilitas Operasional <span className="text-red-500">*</span>
                         </label>
                         <div className="relative">
@@ -370,15 +370,15 @@ export default function ModalEditKegiatan({
                                 value={lokasi}
                                 onChange={(e) => setLokasi(e.target.value)}
                                 required
-                                className="w-full appearance-none pl-9 pr-8 py-2 border border-gray-300 rounded-lg text-xs bg-white text-gray-900 outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600 cursor-pointer"
+                                className="w-full appearance-none pl-9 pr-8 py-2 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white rounded-lg text-xs bg-white text-gray-900 outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600 cursor-pointer"
                             >
                                 {DAFTAR_LOKASI.map((loc) => (
-                                    <option key={loc} value={loc}>
+                                    <option key={loc} value={loc} className="dark:bg-[#141c19] dark:text-white">
                                         {loc}
                                     </option>
                                 ))}
                                 {lokasi && !(DAFTAR_LOKASI as readonly string[]).includes(lokasi) && (
-                                    <option value={lokasi}>{lokasi}</option>
+                                    <option value={lokasi} className="dark:bg-[#141c19] dark:text-white">{lokasi}</option>
                                 )}
                             </select>
                             <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -387,7 +387,7 @@ export default function ModalEditKegiatan({
 
                     {/* Deskripsi & Log Detail */}
                     <div>
-                        <label className="block font-bold text-gray-800 mb-1.5">
+                        <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">
                             Deskripsi / Log Detail Pekerjaan <span className="text-red-500">*</span>
                         </label>
                         <textarea
@@ -395,7 +395,7 @@ export default function ModalEditKegiatan({
                             required
                             value={deskripsi}
                             onChange={(e) => setDeskripsi(e.target.value)}
-                            className="w-full p-3 border border-gray-300 rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                            className="w-full p-3 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
                         />
                     </div>
 
@@ -415,7 +415,7 @@ export default function ModalEditKegiatan({
 
                     {/* Tautan */}
                     <div>
-                        <label className="block font-bold text-gray-800 mb-1.5">Tautan Eksternal / Grafana (Opsional)</label>
+                        <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">Tautan Eksternal / Grafana (Opsional)</label>
                         <div className="relative">
                             <Link2 className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                             <input
@@ -423,20 +423,20 @@ export default function ModalEditKegiatan({
                                 value={tautan}
                                 onChange={(e) => setTautan(e.target.value)}
                                 placeholder="cth: https://grafana.jagofarm.id/d/gh02-telemetry"
-                                className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-xs outline-hidden focus:border-green-600"
+                                className="w-full pl-9 pr-3 py-2 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white dark:placeholder-gray-500 rounded-lg text-xs outline-hidden focus:border-green-600"
                             />
                         </div>
                     </div>
                 </form>
 
                 {/* Footer Modal */}
-                <footer className="flex items-center justify-between p-4 border-t border-gray-100 bg-gray-50/50">
+                <footer className="flex items-center justify-between p-4 border-t border-gray-100 dark:border-[#1e2d27] bg-gray-50/50 dark:bg-[#101915]">
                     <div>
                         {canDelete && (
                             <button
                                 type="button"
                                 onClick={handleDelete}
-                                className="px-3.5 py-2 border border-red-200 text-red-600 hover:bg-red-50 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                                className="px-3.5 py-2 border border-red-200 dark:border-red-900/50 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
                             >
                                 <Trash2 className="w-3.5 h-3.5" /> Hapus Kegiatan
                             </button>
@@ -446,7 +446,7 @@ export default function ModalEditKegiatan({
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-lg text-xs transition cursor-pointer"
+                            className="px-4 py-2 border border-gray-300 dark:border-[#273830] bg-white dark:bg-[#141c19] hover:bg-gray-50 dark:hover:bg-[#1a2420] text-gray-700 dark:text-gray-300 font-semibold rounded-lg text-xs transition cursor-pointer"
                         >
                             Batal
                         </button>

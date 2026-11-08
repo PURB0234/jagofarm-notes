@@ -122,12 +122,12 @@ export default function CatatanWorkspace({
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <div className="flex items-center gap-2.5">
-                        <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Catatan & Kegiatan Tim</h1>
-                        <span className="text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Catatan & Kegiatan Tim</h1>
+                        <span className="text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60">
                             Sistem Terpadu
                         </span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                         Dokumentasi log harian, kalender jadwal operasional, dan timeline Gantt chart dalam satu sistem.
                     </p>
                 </div>
@@ -135,13 +135,13 @@ export default function CatatanWorkspace({
                 {/* Sisi Kanan: Switcher 3 Mode + Tombol Tambah & Cetak */}
                 <div className="flex flex-wrap items-center gap-2.5">
                     {/* Switcher 3 Mode (Desktop view) */}
-                    <div className="hidden md:flex items-center bg-gray-100 p-0.5 rounded-lg border border-gray-200 text-xs font-medium">
+                    <div className="hidden md:flex items-center bg-gray-100 dark:bg-[#0e1613] p-0.5 rounded-lg border border-gray-200 dark:border-[#273830] text-xs font-medium">
                         <button
                             type="button"
                             onClick={() => handleViewModeChange("catatan")}
                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition cursor-pointer ${viewMode === "catatan"
-                                ? "bg-white text-gray-900 shadow-2xs font-semibold"
-                                : "text-gray-600 hover:text-gray-900"
+                                ? "bg-white text-gray-900 dark:bg-[#1a2e24] dark:text-emerald-300 shadow-2xs font-semibold"
+                                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
                                 }`}
                         >
                             <FileText className="w-3.5 h-3.5" />
@@ -151,8 +151,8 @@ export default function CatatanWorkspace({
                             type="button"
                             onClick={() => handleViewModeChange("kalender")}
                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition cursor-pointer ${viewMode === "kalender"
-                                ? "bg-white text-gray-900 shadow-2xs font-semibold"
-                                : "text-gray-600 hover:text-gray-900"
+                                ? "bg-white text-gray-900 dark:bg-[#1a2e24] dark:text-emerald-300 shadow-2xs font-semibold"
+                                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
                                 }`}
                         >
                             <Calendar className="w-3.5 h-3.5" />
@@ -162,8 +162,8 @@ export default function CatatanWorkspace({
                             type="button"
                             onClick={() => handleViewModeChange("gantt")}
                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition cursor-pointer ${viewMode === "gantt"
-                                ? "bg-white text-gray-900 shadow-2xs font-semibold"
-                                : "text-gray-600 hover:text-gray-900"
+                                ? "bg-white text-gray-900 dark:bg-[#1a2e24] dark:text-emerald-300 shadow-2xs font-semibold"
+                                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
                                 }`}
                         >
                             <BarChart3 className="w-3.5 h-3.5" />
@@ -175,10 +175,10 @@ export default function CatatanWorkspace({
                     <button
                         type="button"
                         onClick={() => window.print()}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-lg text-xs font-semibold transition shadow-2xs cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-lg text-xs font-semibold transition shadow-2xs cursor-pointer dark:bg-[#141c19] dark:border-[#273830] dark:text-gray-300 dark:hover:bg-[#1a2420]"
                         title="Cetak Laporan Resmi atau Ekspor ke PDF"
                     >
-                        <Printer className="w-3.5 h-3.5 text-gray-600" />
+                        <Printer className="w-3.5 h-3.5 text-gray-600 dark:text-gray-400" />
                         <span>Cetak Laporan</span>
                     </button>
 

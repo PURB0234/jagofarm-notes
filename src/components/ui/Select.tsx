@@ -15,12 +15,12 @@ export default function Select({
     return (
         <div className={`relative inline-flex items-center ${wrapperClassName}`}>
             <select
-                className={`appearance-none bg-white border border-gray-300 rounded-lg pl-2.5 pr-7 py-1 text-xs font-semibold text-gray-800 hover:border-gray-400 focus:outline-hidden focus:ring-1 focus:ring-green-700 cursor-pointer shadow-2xs transition ${className}`}
+                className={`appearance-none bg-white border border-gray-300 rounded-lg pl-2.5 pr-7 py-1 text-xs font-semibold text-gray-800 hover:border-gray-400 focus:outline-hidden focus:ring-1 focus:ring-green-700 cursor-pointer shadow-2xs transition dark:bg-[#0e1613] dark:border-[#273830] dark:text-gray-200 dark:hover:border-gray-600 ${className}`}
                 {...props}
             >
                 {children}
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-gray-500 absolute right-2 pointer-events-none" />
+            <ChevronDown className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 absolute right-2 pointer-events-none" />
         </div>
     );
 }

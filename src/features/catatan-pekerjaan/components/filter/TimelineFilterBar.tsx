@@ -54,7 +54,7 @@ export default function TimelineFilterBar({
             {/* Sisi Kiri: Status Filter Tabs */}
             <div className="flex flex-wrap items-center gap-3">
                 <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-medium text-gray-500">Tampilkan:</span>
+                    <span className="text-[11px] font-medium text-gray-500 dark:text-gray-400">Tampilkan:</span>
                     <SegmentedControl
                         options={statusOptions}
                         value={filterStatus}
@@ -64,16 +64,16 @@ export default function TimelineFilterBar({
 
                 {/* Petugas Chips (Jika mode chips) */}
                 {staffDisplayMode !== "select" && staffList.length > 0 && (
-                    <div className="flex flex-wrap items-center gap-1.5 pl-2 border-l border-gray-200">
-                        <span className="text-gray-500 mr-0.5 text-[11px]">Petugas:</span>
+                    <div className="flex flex-wrap items-center gap-1.5 pl-2 border-l border-gray-200 dark:border-[#273830]">
+                        <span className="text-gray-500 dark:text-gray-400 mr-0.5 text-[11px]">Petugas:</span>
                         {staffList.map((st) => (
                             <button
                                 key={st.label}
                                 type="button"
                                 onClick={() => onSelectStaff(st.label)}
                                 className={`px-2.5 py-1 rounded-lg text-xs font-medium transition cursor-pointer select-none ${selectedStaff === st.label
-                                        ? "bg-slate-900 text-white"
-                                        : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
+                                        ? "bg-slate-900 text-white dark:bg-emerald-600 dark:text-white"
+                                        : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 dark:bg-[#141c19] dark:border-[#273830] dark:text-gray-300 dark:hover:bg-[#1a2420]"
                                     }`}
                             >
                                 {st.text}
@@ -87,8 +87,8 @@ export default function TimelineFilterBar({
             <div className="flex flex-wrap items-center gap-3">
                 {/* Petugas Select Dropdown */}
                 {staffDisplayMode === "select" && staffList.length > 0 && (
-                    <div className="flex items-center gap-1.5 text-gray-600">
-                        <span className="text-[11px] font-medium text-gray-600">Petugas:</span>
+                    <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300">
+                        <span className="text-[11px] font-medium text-gray-600 dark:text-gray-400">Petugas:</span>
                         <Select
                             value={selectedStaff}
                             onChange={(e) => onSelectStaff(e.target.value)}
@@ -104,8 +104,8 @@ export default function TimelineFilterBar({
 
                 {/* Dropdown Bulan Beragenda */}
                 {activeMonths.length > 0 && (
-                    <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                        <span className="text-[11px] font-medium text-gray-600">Bulan Beragenda:</span>
+                    <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                        <span className="text-[11px] font-medium text-gray-600 dark:text-gray-400">Bulan Beragenda:</span>
                         <Select
                             value={selectedMonthKey}
                             onChange={(e) => {
@@ -126,8 +126,8 @@ export default function TimelineFilterBar({
 
                 {/* Dropdown Bulan Telah Dilaksanakan */}
                 {completedMonths.length > 0 && (
-                    <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                        <span className="text-[11px] font-medium text-gray-600">Telah Dilaksanakan:</span>
+                    <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                        <span className="text-[11px] font-medium text-gray-600 dark:text-gray-400">Telah Dilaksanakan:</span>
                         <Select
                             value={selectedCompletedMonthKey}
                             onChange={(e) => {

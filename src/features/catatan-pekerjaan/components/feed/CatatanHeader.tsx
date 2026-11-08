@@ -19,18 +19,14 @@ export default function CatatanHeader({
     onSortChange,
 }: CatatanHeaderProps) {
     return (
-        <header className="space-y-4 p-4 border border-gray-200 bg-white rounded-xl">
+        <header className="space-y-4 p-4 border border-gray-200 bg-white rounded-xl dark:bg-[#141c19] dark:border-[#1e2d27]">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Catatan Pekerjaan Tim</h1>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Catatan Pekerjaan Tim</h1>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                         Dokumentasi operasional, progres teknis, dan bukti pekerjaan harian tim lapangan.
                     </p>
                 </div>
-                {/* <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs font-medium text-gray-700 shadow-2xs self-start">
-                    <span className="w-2 h-2 rounded-full bg-green-600"></span>
-                    {activeCount} Personel Bertugas Lapangan Hari Ini
-                </div> */}
             </div>
 
             {/* Filter & Pencarian */}
@@ -43,19 +39,19 @@ export default function CatatanHeader({
                             value={search}
                             onChange={(e) => onSearchChange(e.target.value)}
                             placeholder="Cari catatan, lokasi, petugas..."
-                            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-gray-300 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-green-600"
+                            className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-gray-300 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-green-600 dark:bg-[#0e1613] dark:border-[#273830] dark:text-gray-200 dark:placeholder-gray-500"
                         />
                     </div>
 
                 </div>
 
-                <div className="flex items-center gap-2 text-xs text-gray-500">
+                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                     <span>Urutkan:</span>
                     <div className="relative inline-flex items-center">
                         <select
                             value={sortBy}
                             onChange={(e) => onSortChange(e.target.value as SortOption)}
-                            className="appearance-none pl-3 pr-8 py-1.5 bg-white border border-gray-300 rounded-lg text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-hidden focus:ring-1 focus:ring-green-600 cursor-pointer"
+                            className="appearance-none pl-3 pr-8 py-1.5 bg-white border border-gray-300 rounded-lg text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-hidden focus:ring-1 focus:ring-green-600 cursor-pointer dark:bg-[#0e1613] dark:border-[#273830] dark:text-gray-200 dark:hover:bg-[#1a2420]"
                         >
                             <option value="semua">All</option>
                             <option value="terbaru">Terbaru dibuat</option>

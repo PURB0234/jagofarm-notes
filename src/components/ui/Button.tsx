@@ -25,14 +25,14 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variantClasses: Record<ButtonVariant, string> = {
     primary: "bg-[#1E5E35] text-white hover:bg-[#164728] shadow-2xs border border-transparent",
-    secondary: "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-transparent",
-    outline: "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-2xs",
-    dark: "bg-slate-900 text-white hover:bg-slate-800 shadow-2xs border border-transparent",
+    secondary: "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-transparent dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700",
+    outline: "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-2xs dark:bg-[#141c19] dark:text-gray-200 dark:border-[#273830] dark:hover:bg-[#1a2420]",
+    dark: "bg-slate-900 text-white hover:bg-slate-800 shadow-2xs border border-transparent dark:bg-emerald-700 dark:hover:bg-emerald-600",
     danger: "bg-red-600 text-white hover:bg-red-700 shadow-2xs border border-transparent",
-    ghost: "bg-transparent text-gray-600 hover:bg-gray-100 border border-transparent",
+    ghost: "bg-transparent text-gray-600 hover:bg-gray-100 border border-transparent dark:text-gray-300 dark:hover:bg-gray-800",
     nav: "border-b-2 text-sm font-semibold transition-colors disabled:opacity-50",
-    sync: "bg-[#F1F5F1] border border-black/10 rounded-md text-[#1E5E35] font-semibold hover:bg-gray-200",
-    addSchedule: "bg-white border border-black/10 rounded-md text-black font-semibold hover:bg-gray-50",
+    sync: "bg-[#F1F5F1] border border-black/10 rounded-md text-[#1E5E35] font-semibold hover:bg-gray-200 dark:bg-[#16271e] dark:border-white/10 dark:text-emerald-400 dark:hover:bg-[#1d3528]",
+    addSchedule: "bg-white border border-black/10 rounded-md text-black font-semibold hover:bg-gray-50 dark:bg-[#141c19] dark:border-white/10 dark:text-gray-200 dark:hover:bg-[#1a2420]",
     addNote: "bg-[#1E5E35] border border-black/10 rounded-md text-white font-semibold hover:bg-[#164728]",
 };
 

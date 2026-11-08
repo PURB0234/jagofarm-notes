@@ -44,33 +44,33 @@ export default function KalenderNav({
     return (
         <div className="space-y-4">
             {/* Navigasi Tanggal & Filter Petugas */}
-            <div className="flex flex-wrap items-center border border-gray-200 justify-between gap-3 p-2.5 rounded-xl bg-white shadow-2xs">
+            <div className="flex flex-wrap items-center border border-gray-200 justify-between gap-3 p-2.5 rounded-xl bg-white shadow-2xs dark:bg-[#141c19] dark:border-[#1e2d27]">
                 <div className="flex items-center gap-2 text-xs">
                     <button
                         type="button"
                         onClick={onPrevWeek}
-                        className="p-1 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600 transition cursor-pointer"
+                        className="p-1 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600 transition cursor-pointer dark:border-[#273830] dark:hover:bg-[#1a2420] dark:text-gray-300"
                     >
                         <ChevronLeft className="w-3.5 h-3.5" />
                     </button>
                     <button
                         type="button"
                         onClick={onNextWeek}
-                        className="p-1 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600 transition cursor-pointer"
+                        className="p-1 border border-gray-200 rounded-md hover:bg-gray-50 text-gray-600 transition cursor-pointer dark:border-[#273830] dark:hover:bg-[#1a2420] dark:text-gray-300"
                     >
                         <ChevronRight className="w-3.5 h-3.5" />
                     </button>
-                    <span className="font-semibold text-gray-900">
+                    <span className="font-semibold text-gray-900 dark:text-white">
                         {BULAN_NAMES[monday.getMonth()]} {monday.getFullYear()}
                     </span>
-                    <span className="text-gray-400 mx-1">•</span>
-                    <span className="text-gray-500 font-normal">
+                    <span className="text-gray-400 dark:text-gray-600 mx-1">•</span>
+                    <span className="text-gray-500 dark:text-gray-400 font-normal">
                         {monday.getDate()} {BULAN_NAMES[monday.getMonth()].slice(0, 3)} - {sunday.getDate()} {BULAN_NAMES[sunday.getMonth()].slice(0, 3)} {sunday.getFullYear()}
                     </span>
                 </div>
 
                 <div className="flex items-center gap-1.5 text-xs">
-                    <span className="text-gray-500 text-[11px]">Petugas:</span>
+                    <span className="text-gray-500 dark:text-gray-400 text-[11px]">Petugas:</span>
                     <Select value={selectedStaff} onChange={(e) => onSelectStaff(e.target.value)}>
                         {staffList.map((st) => (
                             <option key={st.label} value={st.label}>

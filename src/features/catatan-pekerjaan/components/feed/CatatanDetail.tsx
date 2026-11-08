@@ -103,11 +103,11 @@ export default function CatatanDetail({
 
 
     return (
-        <aside className="bg-white border border-gray-200 rounded-xl shadow-xs overflow-hidden flex flex-col max-h-[calc(100vh-140px)] sticky top-20">
-            <header className="p-5 border-b border-gray-100 space-y-3">
+        <aside className="bg-white border border-gray-200 rounded-xl shadow-xs overflow-hidden flex flex-col max-h-[calc(100vh-140px)] sticky top-20 dark:bg-[#141c19] dark:border-[#1e2d27]">
+            <header className="p-5 border-b border-gray-100 dark:border-[#1e2d27] space-y-3">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${catatan.status === "dikerjakan" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-700"}`}>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${catatan.status === "dikerjakan" ? "bg-green-100 text-green-800 dark:bg-emerald-950/60 dark:text-emerald-300" : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"}`}>
                             {catatan.status}
                         </span>
                         <span className="text-xs font-mono text-gray-400">ID-{catatan.id.slice(0, 8).toUpperCase()}</span>
@@ -119,22 +119,22 @@ export default function CatatanDetail({
                                 onClick={handleDelete}
                                 disabled={loading}
                                 title={isAdmin ? "Hapus Catatan (Admin)" : "Hapus Catatan Saya"}
-                                className="p-1.5 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                                className="p-1.5 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-md transition-colors"
                             >
                                 <Trash2 className="w-4 h-4" />
                             </button>
                         )}
-                        <button className="p-1.5 hover:text-gray-700 hover:bg-gray-100 rounded-md"><Link2 className="w-4 h-4" /></button>
-                        <button className="p-1.5 hover:text-gray-700 hover:bg-gray-100 rounded-md"><Printer className="w-4 h-4" /></button>
+                        <button className="p-1.5 hover:text-gray-700 hover:bg-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-800 rounded-md"><Link2 className="w-4 h-4" /></button>
+                        <button className="p-1.5 hover:text-gray-700 hover:bg-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-800 rounded-md"><Printer className="w-4 h-4" /></button>
                     </div>
 
                 </div>
 
                 <div>
-                    <h2 className="text-lg font-bold text-gray-900 leading-snug">{catatan.judul}</h2>
-                    <p className="flex items-center gap-1.5 text-xs text-gray-500 mt-1">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white leading-snug">{catatan.judul}</h2>
+                    <p className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mt-1">
                         <Clock className="w-3.5 h-3.5" />
-                        <span>Dibuat {formattedDate} WIB oleh <strong>{catatan.penanggung_jawab}</strong></span>
+                        <span>Dibuat {formattedDate} WIB oleh <strong className="text-gray-700 dark:text-gray-200">{catatan.penanggung_jawab}</strong></span>
                     </p>
                 </div>
 
@@ -143,7 +143,7 @@ export default function CatatanDetail({
                         type="button"
                         onClick={() => setIsModalEditOpen(true)}
                         disabled={!canUpdateStatus}
-                        className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 hover:bg-gray-50 rounded-lg text-xs font-semibold text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 hover:bg-gray-50 rounded-lg text-xs font-semibold text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer dark:border-[#273830] dark:bg-[#141c19] dark:text-gray-300 dark:hover:bg-[#1a2420]"
                     >
                         <Edit3 className="w-3.5 h-3.5" /> Edit Catatan
                     </button>
@@ -161,34 +161,34 @@ export default function CatatanDetail({
             </header>
 
             <div className="p-5 space-y-5 overflow-y-auto flex-1 text-xs">
-                <div className="grid grid-cols-2 gap-4 bg-blue-50/40 border border-blue-100 rounded-xl p-3.5 text-gray-700">
+                <div className="grid grid-cols-2 gap-4 bg-blue-50/40 border border-blue-100 rounded-xl p-3.5 text-gray-700 dark:bg-emerald-950/20 dark:border-emerald-900/30 dark:text-gray-300">
                     <div>
                         <span className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Penanggung Jawab</span>
-                        <div className="flex items-center gap-1.5 font-bold text-gray-900">
+                        <div className="flex items-center gap-1.5 font-bold text-gray-900 dark:text-white">
                             <span className="w-2 h-2 rounded-full bg-purple-600"></span> {catatan.penanggung_jawab}
                         </div>
                     </div>
                     <div>
                         <span className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Lokasi / Fasilitas</span>
-                        <strong className="text-gray-900 block">{catatan.lokasi}</strong>
+                        <strong className="text-gray-900 dark:text-white block">{catatan.lokasi}</strong>
                     </div>
                 </div>
 
                 {/* Karakter Waktu Pelaksanaan (Otomatis berdasarkan durasi) */}
-                <div className="grid grid-cols-2 gap-4 bg-slate-50/80 border border-slate-200/80 rounded-xl p-3.5 text-gray-700">
+                <div className="grid grid-cols-2 gap-4 bg-slate-50/80 border border-slate-200/80 rounded-xl p-3.5 text-gray-700 dark:bg-[#0e1613] dark:border-[#273830] dark:text-gray-300">
                     <div>
                         <span className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
                             {isMultiDay ? "Periode Pelaksanaan" : "Waktu Pelaksanaan"}
                         </span>
-                        <div className="flex items-center gap-1.5 font-semibold text-gray-900">
+                        <div className="flex items-center gap-1.5 font-semibold text-gray-900 dark:text-white">
                             {isMultiDay ? (
                                 <>
-                                    <Calendar className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                                    <Calendar className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                                     <span>{startStr} s/d {endStr} ({daysCount} hari)</span>
                                 </>
                             ) : (
                                 <>
-                                    <Clock className="w-3.5 h-3.5 text-gray-500 shrink-0" />
+                                    <Clock className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 shrink-0" />
                                     <span>
                                         {catatan.waktu_mulai ? catatan.waktu_mulai.slice(0, 5) : "08:00"} - {catatan.waktu_selesai ? catatan.waktu_selesai.slice(0, 5) : "10:00"} WIB
                                     </span>
@@ -200,8 +200,8 @@ export default function CatatanDetail({
                         <span className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Karakter Tugas</span>
                         <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
                             isMultiDay
-                                ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
-                                : "bg-gray-100 text-gray-700 border border-gray-200"
+                                ? "bg-emerald-100 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60"
+                                : "bg-gray-100 text-gray-700 border border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700"
                         }`}>
                             {isMultiDay ? "Multi-Hari (Siklus)" : "Jam Operasional"}
                         </span>
@@ -209,20 +209,20 @@ export default function CatatanDetail({
                 </div>
 
                 <section className="space-y-2">
-                    <h3 className="font-bold text-gray-700 uppercase tracking-wider text-[11px]">≡ Deskripsi & Log Pekerjaan</h3>
-                    <p className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-gray-700 leading-relaxed text-xs whitespace-pre-wrap">
+                    <h3 className="font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider text-[11px]">≡ Deskripsi & Log Pekerjaan</h3>
+                    <p className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-gray-700 leading-relaxed text-xs whitespace-pre-wrap dark:bg-[#0e1613] dark:border-[#273830] dark:text-gray-300">
                         {catatan.deskripsi}
                     </p>
                 </section>
 
                 {catatan.tautan_eksternal && !catatan.tautan_eksternal.startsWith("jadwal:") && (
-                    <section className="space-y-2 pt-2 border-t border-gray-100">
-                        <h3 className="font-bold text-gray-700 uppercase tracking-wider text-[11px]">Tautan</h3>
+                    <section className="space-y-2 pt-2 border-t border-gray-100 dark:border-[#1e2d27]">
+                        <h3 className="font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider text-[11px]">Tautan</h3>
                         <a
                             href={catatan.tautan_eksternal}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-between p-2.5 border border-gray-200 rounded-lg bg-white hover:bg-gray-50 text-blue-600 truncate"
+                            className="flex items-center justify-between p-2.5 border border-gray-200 rounded-lg bg-white hover:bg-gray-50 text-blue-600 truncate dark:border-[#273830] dark:bg-[#0e1613] dark:hover:bg-[#16221c] dark:text-blue-400"
                         >
                             <span className="flex items-center gap-2 truncate">
                                 <ExternalLink className="w-4 h-4 shrink-0" /> {catatan.tautan_eksternal}
@@ -233,15 +233,15 @@ export default function CatatanDetail({
                 )}
 
                 {catatan.lampiran_url && (
-                    <section className="space-y-2 pt-2 border-t border-gray-100">
-                        <h3 className="font-bold text-gray-700 uppercase tracking-wider text-[11px]">
+                    <section className="space-y-2 pt-2 border-t border-gray-100 dark:border-[#1e2d27]">
+                        <h3 className="font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider text-[11px]">
                             Bukti & Lampiran Lapangan
                         </h3>
                         <a
                             href={catatan.lampiran_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-between p-2.5 border border-gray-200 rounded-lg bg-gray-50/70 hover:bg-gray-100 transition-colors"
+                            className="flex items-center justify-between p-2.5 border border-gray-200 rounded-lg bg-gray-50/70 hover:bg-gray-100 dark:border-[#273830] dark:bg-[#0e1613] dark:hover:bg-[#16221c] transition-colors"
                         >
                             <div className="flex items-center gap-2.5 truncate">
                                 <div className="w-7 h-7 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">

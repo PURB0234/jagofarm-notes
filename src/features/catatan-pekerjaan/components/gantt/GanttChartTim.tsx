@@ -209,8 +209,8 @@ export default function GanttChartTim({
                 onWheel={handleWheel}
                 className={
                     (isFullscreen
-                        ? "flex-1 w-full overflow-auto overscroll-contain bg-white border border-gray-300 rounded-xl shadow-lg select-none "
-                        : "overflow-auto max-h-[calc(100vh-230px)] bg-white border border-gray-200 rounded-xl shadow-2xs select-none ") +
+                        ? "flex-1 w-full overflow-auto overscroll-contain bg-white dark:bg-[#141c19] border border-gray-300 dark:border-[#1e2d27] rounded-xl shadow-lg select-none "
+                        : "overflow-auto max-h-[calc(100vh-230px)] bg-white dark:bg-[#141c19] border border-gray-200 dark:border-[#1e2d27] rounded-xl shadow-2xs select-none ") +
                     (resizingBar ? "cursor-w-resize select-none " : isResizingMeta ? "cursor-col-resize select-none " : isPanning ? "cursor-grabbing " : "cursor-default ")
                 }
             >
@@ -222,7 +222,7 @@ export default function GanttChartTim({
                     className="relative flex flex-col"
                 >
                     {/* Header Row: Kolom Kiri (Metadata) + Kolom Kanan (Timeline Dates) */}
-                    <div className="sticky top-0 z-30 flex bg-slate-100 border-b border-gray-300 text-xs font-bold text-gray-700 shadow-2xs">
+                    <div className="sticky top-0 z-30 flex bg-slate-100 dark:bg-[#101915] border-b border-gray-300 dark:border-[#273830] text-xs font-bold text-gray-700 dark:text-gray-200 shadow-2xs">
                         <GanttHeaderMetadata
                             metaWidth={metaWidth}
                             onResizeStart={handleResizeStart}
@@ -236,11 +236,11 @@ export default function GanttChartTim({
 
                     {/* Data Rows: Semua Agenda */}
                     {sortedJadwals.length === 0 ? (
-                        <div className="py-20 text-center text-xs text-gray-400">
+                        <div className="py-20 text-center text-xs text-gray-400 dark:text-gray-500">
                             Tidak ada agenda yang terdaftar.
                         </div>
                     ) : (
-                        <div className="divide-y divide-gray-100">
+                        <div className="divide-y divide-gray-100 dark:divide-[#1e2d27]">
                             {sortedJadwals.map((task) => {
                                 const optStart = optimisticDates[task.id + "_start"];
                                 const rawStart = optStart || String(task.tanggal || "").slice(0, 10);

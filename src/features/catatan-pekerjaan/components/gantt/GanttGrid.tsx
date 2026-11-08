@@ -22,22 +22,22 @@ export function GanttHeaderDates({
     return (
         <div
             style={{ width: totalTimelineWidth + "px" }}
-            className="shrink-0 flex bg-slate-50"
+            className="shrink-0 flex bg-slate-50 dark:bg-[#101915]"
         >
             {dateColumns.map((col) => (
                 <div
                     key={col.iso}
                     style={{ width: finalColWidth + "px" }}
                     className={
-                        "shrink-0 border-r border-gray-200 text-center py-2 " +
-                        (col.isToday ? "bg-emerald-100/90 text-emerald-950 font-bold" : "")
+                        "shrink-0 border-r border-gray-200 dark:border-[#273830] text-center py-2 " +
+                        (col.isToday ? "bg-emerald-100/90 text-emerald-950 dark:bg-emerald-950/80 dark:text-emerald-300 font-bold" : "")
                     }
                 >
-                    <div className="text-[10px] uppercase font-semibold text-gray-500">
+                    <div className="text-[10px] uppercase font-semibold text-gray-500 dark:text-gray-400">
                         {col.dayName}
                     </div>
-                    <div className="text-xs font-bold">{col.day}</div>
-                    <div className="text-[9px] text-gray-400">{col.month}</div>
+                    <div className="text-xs font-bold text-gray-900 dark:text-gray-100">{col.day}</div>
+                    <div className="text-[9px] text-gray-400 dark:text-gray-500">{col.month}</div>
                 </div>
             ))}
         </div>
@@ -95,9 +95,9 @@ export function GanttRowGrid({
                         key={col.iso}
                         style={{ width: finalColWidth + "px" }}
                         className={
-                            "shrink-0 border-r border-gray-100 transition-colors " +
-                            (dragOverCol === colIdx && draggedTaskId ? "bg-emerald-100/70 border-emerald-300 " : "") +
-                            (col.isToday ? "bg-emerald-50/40" : "")
+                            "shrink-0 border-r border-gray-100 dark:border-[#1e2d27]/70 transition-colors " +
+                            (dragOverCol === colIdx && draggedTaskId ? "bg-emerald-100/70 dark:bg-emerald-950/70 border-emerald-300 dark:border-emerald-600 " : "") +
+                            (col.isToday ? "bg-emerald-50/40 dark:bg-emerald-950/20" : "")
                         }
                     />
                 ))}

@@ -193,23 +193,23 @@ export default function ModalTambahKegiatan({ isOpen, onClose, onSuccess }: Moda
 
     return (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/50 backdrop-blur-2xs">
-            <div className="bg-white rounded-t-2xl sm:rounded-2xl border border-gray-200 shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in duration-150">
+            <div className="bg-white dark:bg-[#141c19] rounded-t-2xl sm:rounded-2xl border border-gray-200 dark:border-[#1e2d27] shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in duration-150">
                 {/* Header Modal */}
-                <header className="flex items-start justify-between p-4 sm:p-5 border-b border-gray-100 bg-slate-50/50">
+                <header className="flex items-start justify-between p-4 sm:p-5 border-b border-gray-100 dark:border-[#1e2d27] bg-slate-50/50 dark:bg-[#101915]">
                     <div className="flex items-center gap-3">
                         <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#1E5E35] text-white flex items-center justify-center shrink-0">
                             <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                         <div>
-                            <h2 className="text-sm sm:text-base font-bold text-gray-900">Tambah Catatan & Kegiatan Baru</h2>
-                            <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
+                            <h2 className="text-sm sm:text-base font-bold text-gray-900 dark:text-white">Tambah Catatan & Kegiatan Baru</h2>
+                            <p className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                                 Terhubung langsung ke Log Catatan, Kalender Jadwal, dan Timeline Gantt Chart.
                             </p>
                         </div>
                     </div>
                     <button
                         onClick={onClose}
-                        className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition cursor-pointer"
+                        className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 dark:hover:text-gray-200 dark:hover:bg-gray-800 rounded-lg transition cursor-pointer"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -219,7 +219,7 @@ export default function ModalTambahKegiatan({ isOpen, onClose, onSuccess }: Moda
                 <form id="form-tambah-kegiatan" onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto space-y-4 text-xs">
                     {/* Judul Kegiatan */}
                     <div>
-                        <label className="block font-bold text-gray-800 mb-1.5">
+                        <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">
                             Judul / Nama Kegiatan <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -228,7 +228,7 @@ export default function ModalTambahKegiatan({ isOpen, onClose, onSuccess }: Moda
                             value={namaKegiatan}
                             onChange={(e) => setNamaKegiatan(e.target.value)}
                             placeholder="Contoh: Kalibrasi Sensor EC Greenhouse 02 & Cek Pompa Nutrisi"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                            className="w-full px-3 py-2 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white dark:placeholder-gray-500 rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
                         />
                     </div>
 
@@ -256,7 +256,7 @@ export default function ModalTambahKegiatan({ isOpen, onClose, onSuccess }: Moda
 
                     {/* Lokasi */}
                     <div>
-                        <label className="block font-bold text-gray-800 mb-1.5">
+                        <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">
                             Lokasi / Fasilitas Operasional <span className="text-red-500">*</span>
                         </label>
                         <div className="relative">
@@ -265,10 +265,10 @@ export default function ModalTambahKegiatan({ isOpen, onClose, onSuccess }: Moda
                                 value={lokasi}
                                 onChange={(e) => setLokasi(e.target.value)}
                                 required
-                                className="w-full appearance-none pl-9 pr-8 py-2 border border-gray-300 rounded-lg text-xs bg-white text-gray-900 outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600 cursor-pointer"
+                                className="w-full appearance-none pl-9 pr-8 py-2 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white rounded-lg text-xs bg-white text-gray-900 outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600 cursor-pointer"
                             >
                                 {DAFTAR_LOKASI.map((loc) => (
-                                    <option key={loc} value={loc}>
+                                    <option key={loc} value={loc} className="dark:bg-[#141c19] dark:text-white">
                                         {loc}
                                     </option>
                                 ))}
@@ -279,7 +279,7 @@ export default function ModalTambahKegiatan({ isOpen, onClose, onSuccess }: Moda
 
                     {/* Deskripsi & Log Detail */}
                     <div>
-                        <label className="block font-bold text-gray-800 mb-1.5">
+                        <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">
                             Deskripsi / Log Detail Pekerjaan <span className="text-red-500">*</span>
                         </label>
                         <textarea
@@ -288,7 +288,7 @@ export default function ModalTambahKegiatan({ isOpen, onClose, onSuccess }: Moda
                             value={deskripsi}
                             onChange={(e) => setDeskripsi(e.target.value)}
                             placeholder="Tuliskan catatan teknis lapangan, hasil inspeksi, penanganan nutrisi, atau arahan tugas..."
-                            className="w-full p-3 border border-gray-300 rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                            className="w-full p-3 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white dark:placeholder-gray-500 rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
                         />
                     </div>
 
@@ -301,7 +301,7 @@ export default function ModalTambahKegiatan({ isOpen, onClose, onSuccess }: Moda
 
                     {/* Tautan Eksternal */}
                     <div>
-                        <label className="block font-bold text-gray-800 mb-1.5">Tautan Eksternal / Grafana (Opsional)</label>
+                        <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">Tautan Eksternal / Grafana (Opsional)</label>
                         <div className="relative">
                             <Link2 className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                             <input
@@ -309,18 +309,18 @@ export default function ModalTambahKegiatan({ isOpen, onClose, onSuccess }: Moda
                                 value={tautan}
                                 onChange={(e) => setTautan(e.target.value)}
                                 placeholder="cth: https://grafana.jagofarm.id/d/gh02-telemetry"
-                                className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-xs outline-hidden focus:border-green-600"
+                                className="w-full pl-9 pr-3 py-2 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white dark:placeholder-gray-500 rounded-lg text-xs outline-hidden focus:border-green-600"
                             />
                         </div>
                     </div>
                 </form>
 
                 {/* Footer Modal */}
-                <footer className="flex items-center justify-end gap-3 p-4 border-t border-gray-100 bg-gray-50/50">
+                <footer className="flex items-center justify-end gap-3 p-4 border-t border-gray-100 dark:border-[#1e2d27] bg-gray-50/50 dark:bg-[#101915]">
                     <button
                         type="button"
                         onClick={onClose}
-                        className="px-4 py-2 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-lg text-xs transition"
+                        className="px-4 py-2 border border-gray-300 dark:border-[#273830] bg-white dark:bg-[#141c19] hover:bg-gray-50 dark:hover:bg-[#1a2420] text-gray-700 dark:text-gray-300 font-semibold rounded-lg text-xs transition cursor-pointer"
                     >
                         Batal
                     </button>
@@ -328,7 +328,7 @@ export default function ModalTambahKegiatan({ isOpen, onClose, onSuccess }: Moda
                         form="form-tambah-kegiatan"
                         disabled={loading}
                         type="submit"
-                        className="px-4 py-2 bg-[#1E5E35] hover:bg-green-800 text-white font-semibold rounded-lg text-xs flex items-center gap-2 shadow-2xs transition disabled:opacity-50"
+                        className="px-4 py-2 bg-[#1E5E35] hover:bg-green-800 text-white font-semibold rounded-lg text-xs flex items-center gap-2 shadow-2xs transition disabled:opacity-50 cursor-pointer"
                     >
                         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <BookmarkCheck className="w-4 h-4" />}
                         <span>{loading ? "Menyimpan..." : "Simpan & Publikasikan"}</span>

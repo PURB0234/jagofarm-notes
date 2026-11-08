@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { motion } from "motion/react";
 
 type FloatingAddButtonProps = {
     onClick: () => void;
@@ -6,14 +7,16 @@ type FloatingAddButtonProps = {
 
 export default function FloatingAddButton({ onClick }: FloatingAddButtonProps) {
     return (
-        <button
+        <motion.button
             type="button"
             onClick={onClick}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.92 }}
             aria-label="Tambah Catatan"
             title="Tambah Catatan & Kegiatan Baru"
-            className="fixed right-4 bottom-20 z-40 md:hidden w-12 h-12 bg-[#1E5E35] hover:bg-green-800 active:scale-95 text-white rounded-full shadow-lg shadow-green-900/20 flex items-center justify-center transition-all cursor-pointer border border-green-700/30"
+            className="fixed right-4 bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.75rem)] z-40 md:hidden w-12 h-12 bg-linear-to-b from-[#188d5b] to-[#126b40] dark:from-[#22c55e] dark:to-[#15803d] text-white rounded-full shadow-lg shadow-green-950/30 flex items-center justify-center transition-colors cursor-pointer border-[2px] border-white/80 dark:border-[#141c19] ring-2 ring-emerald-500/20"
         >
             <Plus className="w-6 h-6 stroke-[2.5]" />
-        </button>
+        </motion.button>
     );
 }

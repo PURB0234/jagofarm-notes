@@ -35,7 +35,7 @@ export default function DateRangePicker({
             {/* Rentang Tanggal Pelaksanaan */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                    <label className="block font-bold text-gray-800 mb-1.5">
+                    <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">
                         Dari Tanggal <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
@@ -50,13 +50,13 @@ export default function DateRangePicker({
                                 setTanggal(val);
                                 if (tanggalSelesai < val) setTanggalSelesai(val);
                             }}
-                            className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                            className="w-full pl-8 pr-3 py-2 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
                         />
                     </div>
                 </div>
 
                 <div>
-                    <label className="block font-bold text-gray-800 mb-1.5">
+                    <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">
                         Sampai Tanggal <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
@@ -67,7 +67,7 @@ export default function DateRangePicker({
                             min={tanggal || effectiveMinDate}
                             value={tanggalSelesai}
                             onChange={(e) => setTanggalSelesai(e.target.value)}
-                            className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                            className="w-full pl-8 pr-3 py-2 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white rounded-lg text-xs outline-hidden focus:border-green-600 focus:ring-1 focus:ring-green-600"
                         />
                     </div>
                 </div>
@@ -75,7 +75,7 @@ export default function DateRangePicker({
 
             {/* Waktu Pelaksanaan */}
             <div>
-                <label className="block font-bold text-gray-800 mb-1.5">
+                <label className="block font-bold text-gray-800 dark:text-gray-200 mb-1.5">
                     Waktu Pelaksanaan (Mulai - Selesai) <span className="text-red-500">*</span>
                 </label>
                 <div className="flex items-center gap-1.5">
@@ -84,7 +84,7 @@ export default function DateRangePicker({
                         required
                         value={waktuMulai}
                         onChange={(e) => setWaktuMulai(e.target.value)}
-                        className="w-full px-2 py-2 border border-gray-300 rounded-lg text-xs text-center outline-hidden focus:border-green-600"
+                        className="w-full px-2 py-2 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white rounded-lg text-xs text-center outline-hidden focus:border-green-600"
                     />
                     <span className="text-gray-400 text-[11px] font-medium shrink-0">s/d</span>
                     <input
@@ -92,7 +92,7 @@ export default function DateRangePicker({
                         required
                         value={waktuSelesai}
                         onChange={(e) => setWaktuSelesai(e.target.value)}
-                        className="w-full px-2 py-2 border border-gray-300 rounded-lg text-xs text-center outline-hidden focus:border-green-600"
+                        className="w-full px-2 py-2 border border-gray-300 dark:border-[#273830] dark:bg-[#0e1613] dark:text-white rounded-lg text-xs text-center outline-hidden focus:border-green-600"
                     />
                 </div>
             </div>

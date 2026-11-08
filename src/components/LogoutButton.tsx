@@ -29,12 +29,12 @@ export default function LogoutButton() {
             onClick={handleLogout}
             disabled={loading}
             title="Keluar Akun"
-            className="rounded-lg border border-white/10 px-4 py-2 text-sm hover:bg-white/10 disabled:opacity-50 transition-colors"
+            className="rounded-lg border border-gray-200 dark:border-[#273830] p-1.5 text-sm hover:bg-gray-100 dark:hover:bg-[#1a2420] text-gray-600 dark:text-gray-300 disabled:opacity-50 transition-colors cursor-pointer"
         >
             {loading ? (
-                <Loader2 className="w-5 h-5 text-red-600 animate-spin" />
+                <Loader2 className="w-4 h-4 text-red-600 animate-spin" />
             ) : (
-                <PowerCircle className="w-5 h-5 text-red-600" />
+                <PowerCircle className="w-4 h-4 text-red-600" />
             )}
         </button>
     );

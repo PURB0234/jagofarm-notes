@@ -116,17 +116,17 @@ export default function TopBar({ role, onOpenTambah }: TopBarProps) {
     const remainingCount = onlineUsers.length - 2;
 
     const colors = [
-        "bg-[#F1F5F1] border-green-200 text-green-800",
-        "bg-slate-100 border-slate-300 text-slate-700",
+        "bg-[#F1F5F1] border-green-200 text-green-800 dark:bg-emerald-950 dark:border-emerald-800 dark:text-emerald-300",
+        "bg-slate-100 border-slate-300 text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200",
     ];
 
     return (
-        <header className="bg-white/95 backdrop-blur-xs sticky top-0 z-30 w-full h-14 sm:h-15 border-b border-gray-200 px-4 sm:px-6 flex flex-row items-center justify-between">
+        <header className="bg-white/95 dark:bg-[#0b1110]/95 backdrop-blur-xs sticky top-0 z-30 w-full h-14 sm:h-15 border-b border-gray-200 dark:border-[#1e2d27] px-4 sm:px-6 flex flex-row items-center justify-between">
             {/* KIRI: Logo + Nav */}
             <div className="flex flex-row items-center gap-4 sm:gap-8 h-full">
                 <div className="flex flex-row items-center gap-2">
-                    <JagoFarmIcon className="text-green-800 w-5 h-5" />
-                    <h3 className="font-bold text-gray-900 tracking-tight text-sm sm:text-base">JagoFarm-Keun</h3>
+                    <JagoFarmIcon className="text-green-800 dark:text-emerald-400 w-5 h-5" />
+                    <h3 className="font-bold text-gray-900 dark:text-white tracking-tight text-sm sm:text-base">JagoFarm-Keun</h3>
                 </div>
 
                 <nav className="hidden md:flex flex-row gap-2 items-center h-full">
@@ -140,8 +140,8 @@ export default function TopBar({ role, onOpenTambah }: TopBarProps) {
                                 href={item.href}
                                 variant="nav"
                                 className={`flex items-center gap-2 px-4 h-full text-sm font-semibold border-b-2 transition-colors ${active
-                                    ? "border-green-600 text-green-700"
-                                    : "border-transparent text-gray-600 hover:text-black hover:bg-gray-100"
+                                    ? "border-green-600 text-green-700 dark:border-emerald-500 dark:text-emerald-400"
+                                    : "border-transparent text-gray-600 hover:text-black hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800/60"
                                     }`}
                             >
                                 <span>{item.label}</span>
@@ -153,12 +153,12 @@ export default function TopBar({ role, onOpenTambah }: TopBarProps) {
 
             {/* KANAN: Aksi + Realtime Badges */}
             <div className="flex flex-row items-center gap-2.5 sm:gap-4">
-                <div className="flex flex-row gap-2 sm:gap-3 items-center pr-2.5 sm:pr-4 border-r border-gray-300">
+                <div className="flex flex-row gap-2 sm:gap-3 items-center pr-2.5 sm:pr-4 border-r border-gray-300 dark:border-[#273830]">
                     <button
                         type="button"
                         onClick={toggleTheme}
                         title={theme === "dark" ? "Ganti ke Mode Terang" : "Ganti ke Mode Gelap"}
-                        className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer select-none"
+                        className="p-1.5 rounded-lg border border-gray-200 dark:border-[#273830] bg-gray-50 dark:bg-[#141c19] text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1a2420] transition cursor-pointer select-none"
                     >
                         {theme === "dark" ? (
                             <Sun className="w-3.5 h-3.5 text-amber-400" />

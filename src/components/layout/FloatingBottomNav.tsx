@@ -1,5 +1,64 @@
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Home, FileText, Calendar, BarChart3 } from "lucide-react";
+import {
+    motion,
+    useMotionValue,
+    useSpring,
+    useTransform,
+    AnimatePresence,
+} from "motion/react";
+
+// Geometri dan dimensi kurva navbar
+const NAV_WIDTH = 342;
+const NAV_HEIGHT = 64;
+const CORNER_RADIUS = 20;
+const NOTCH_RADIUS = 35;
+const NOTCH_DEPTH = 29;
+
+// Konstanta aproksimasi Bezier untuk sudut melengkung sempurna (quarter circle arc)
+const K_BEZIER = 0.55228475;
+const RK = CORNER_RADIUS * (1 - K_BEZIER);
+
+// Titik tengah horizontal untuk setiap tab (jarak antar tab = 78px)
+const TAB_CENTERS = [54, 132, 210, 288];
+
+/**
+ * Menghasilkan SVG Path yang mulus dan presisi dengan lekukan cekung (concave notch)
+ * yang posisinya mengikuti nilai koordinat X secara dinamis.
+ */
+function getConcaveNavPath(X: number): string {
+    const leftNotch = X - NOTCH_RADIUS;
+    const rightNotch = X + NOTCH_RADIUS;
+
+    return [
+        // Sudut kiri atas
+        `M ${CORNER_RADIUS} 0`,
+        // Garis datar kiri menuju awal lekukan
+        `L ${leftNotch} 0`,
+        // Kurva cekung turun membentuk lekukan penyangga (catenary dip)
+        `C ${X - 22} 0 ${X - 18} ${NOTCH_DEPTH} ${X} ${NOTCH_DEPTH}`,
+        // Kurva cekung naik kembali ke garis datar kanan
+        `C ${X + 18} ${NOTCH_DEPTH} ${X + 22} 0 ${rightNotch} 0`,
+        // Garis datar kanan menuju sudut kanan atas
+        `L ${NAV_WIDTH - CORNER_RADIUS} 0`,
+        // Sudut kanan atas
+        `C ${NAV_WIDTH - RK} 0 ${NAV_WIDTH} ${RK} ${NAV_WIDTH} ${CORNER_RADIUS}`,
+        // Sisi kanan
+        `L ${NAV_WIDTH} ${NAV_HEIGHT - CORNER_RADIUS}`,
+        // Sudut kanan bawah
+        `C ${NAV_WIDTH} ${NAV_HEIGHT - RK} ${NAV_WIDTH - RK} ${NAV_HEIGHT} ${NAV_WIDTH - CORNER_RADIUS} ${NAV_HEIGHT}`,
+        // Sisi bawah datar
+        `L ${CORNER_RADIUS} ${NAV_HEIGHT}`,
+        // Sudut kiri bawah
+        `C ${RK} ${NAV_HEIGHT} 0 ${NAV_HEIGHT - RK} 0 ${NAV_HEIGHT - CORNER_RADIUS}`,
+        // Sisi kiri
+        `L 0 ${CORNER_RADIUS}`,
+        // Sudut kiri atas penutup
+        `C 0 ${RK} ${RK} 0 ${CORNER_RADIUS} 0`,
+        "Z",
+    ].join(" ");
+}
 
 export default function FloatingBottomNav() {
     const location = useLocation();
@@ -54,82 +113,148 @@ export default function FloatingBottomNav() {
     };
 
     const activeIndex = getActiveIndex();
+    const targetX = TAB_CENTERS[activeIndex] ?? TAB_CENTERS[0];
+
+    // Spring physics untuk pergerakan horizontal yang natural dan elastis
+    const activeX = useMotionValue(targetX);
+    const xSpring = useSpring(activeX, {
+        stiffness: 380,
+        damping: 28,
+        mass: 0.75,
+    });
+
+    useEffect(() => {
+        activeX.set(targetX);
+    }, [targetX, activeX]);
+
+    // Path SVG dinamis yang berevolusi secara real-time mengikuti spring physics
+    const navPath = useTransform(xSpring, (currentX) => getConcaveNavPath(currentX));
+
     const ActiveIcon = navItems[activeIndex].icon;
 
     return (
         <nav
             aria-label="Navigasi Bawah Mobile"
-            className="fixed bottom-4 inset-x-0 mx-auto w-[330px] z-40 md:hidden select-none"
+            className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] inset-x-0 mx-auto w-[342px] max-w-[calc(100vw-24px)] z-40 md:hidden select-none"
         >
-            <div className="relative w-full h-16 bg-white rounded-full border border-gray-200/90 shadow-xl shadow-black/8 px-1">
-                {/* Indikator Melayang + Sayap Lengkung Organik (Ikut Geser Halus) */}
-                <div
-                    className="absolute -top-5 left-0 w-1/4 flex justify-center transition-transform duration-300 ease-out pointer-events-none"
-                    style={{ transform: "translateX(" + (activeIndex * 100) + "%)" }}
+            <div className="relative w-full h-[64px]">
+                {/* 1. Latar Belakang SVG dengan Lekukan Cekung Organik yang Mengikuti Tab */}
+                <svg
+                    viewBox={`0 0 ${NAV_WIDTH} ${NAV_HEIGHT}`}
+                    className="absolute inset-0 w-full h-full overflow-visible pointer-events-none drop-shadow-[0_12px_24px_rgba(0,0,0,0.08)] dark:drop-shadow-[0_14px_30px_rgba(0,0,0,0.55)]"
                 >
-                    <div className="relative flex items-center justify-center">
-                        {/* Sayap Lekukan Kiri (Menyambung garis datar navbar ke bulatan) */}
-                        <svg
-                            className="absolute top-[4px] -left-[15px] w-4 h-4 text-white pointer-events-none"
-                            viewBox="0 0 16 16"
-                            fill="currentColor"
-                        >
-                            <path d="M 0 16 C 8 16, 16 8, 16 0 L 16 16 Z" />
-                        </svg>
+                    <motion.path
+                        d={navPath}
+                        className="fill-white dark:fill-[#141c19] stroke-gray-200/90 dark:stroke-[#273830]"
+                        strokeWidth="1.2"
+                    />
+                </svg>
 
-                        {/* Kerah Lingkaran Penyangga */}
-                        <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-xs">
-                            {/* Tombol Bulat Hijau Aktif */}
-                            <div className="w-11 h-11 rounded-full bg-[#1E5E35] text-white flex items-center justify-center shadow-lg shadow-green-950/30 transition-transform duration-200">
-                                <ActiveIcon className="w-5 h-5 stroke-[2.2]" />
-                            </div>
-                        </div>
-
-                        {/* Sayap Lekukan Kanan (Menyambung bulatan kembali ke garis navbar) */}
-                        <svg
-                            className="absolute top-[4px] -right-[15px] w-4 h-4 text-white pointer-events-none"
-                            viewBox="0 0 16 16"
-                            fill="currentColor"
+                {/* 2. Indikator Lingkaran Aktif Melayang (Elevated Circular Badge) */}
+                <motion.div
+                    style={{ x: xSpring }}
+                    className="absolute -top-[19px] left-0 pointer-events-none z-20"
+                >
+                    {/* Offset -50% agar lingkaran 50px tepat simetris di titik tengah X */}
+                    <div className="-translate-x-1/2 flex items-center justify-center">
+                        {/* Animasi mengambang mikro (subtle floating levitation) */}
+                        <motion.div
+                            animate={{ y: [0, -2, 0] }}
+                            transition={{
+                                repeat: Infinity,
+                                duration: 3.2,
+                                ease: "easeInOut",
+                            }}
+                            className="relative w-[50px] h-[50px] rounded-full bg-linear-to-b from-[#188d5b] to-[#126b40] dark:from-[#22c55e] dark:to-[#15803d] text-white flex items-center justify-center border-[2.5px] border-white dark:border-[#141c19] ring-2 ring-emerald-500/25 dark:ring-emerald-400/20 shadow-[0_8px_18px_-2px_rgba(22,128,82,0.45)] dark:shadow-[0_8px_20px_-2px_rgba(34,197,94,0.4)]"
                         >
-                            <path d="M 16 16 C 8 16, 0 8, 0 0 L 0 16 Z" />
-                        </svg>
+                            {/* Ikon di dalam bulatan aktif dengan transisi pop halus */}
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={navItems[activeIndex].id}
+                                    initial={{ scale: 0.5, opacity: 0, rotate: -15 }}
+                                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                                    exit={{ scale: 0.5, opacity: 0, rotate: 15 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 450,
+                                        damping: 24,
+                                    }}
+                                    className="flex items-center justify-center"
+                                >
+                                    <ActiveIcon className="w-5 h-5 stroke-[2.3]" />
+                                </motion.div>
+                            </AnimatePresence>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
 
-                {/* 4 Kolom Tombol Menu */}
-                <div className="grid grid-cols-4 h-full">
+                {/* 3. Baris Tombol Tab Navigasi Interaktif */}
+                <div className="relative z-10 grid grid-cols-4 h-full px-[15px]">
                     {navItems.map((item) => {
                         const Icon = item.icon;
+                        const isActive = item.active;
+
                         return (
-                            <button
+                            <motion.button
                                 key={item.id}
                                 type="button"
                                 onClick={() => navigate(item.path)}
-                                className={
-                                    "relative flex flex-col items-center justify-end h-full pb-2 transition-all cursor-pointer " +
-                                    (item.active ? "text-[#1E5E35]" : "text-gray-400 hover:text-gray-600")
-                                }
+                                whileHover={{ y: isActive ? 0 : -2 }}
+                                whileTap={{ scale: 0.93 }}
+                                className="relative flex flex-col items-center justify-between h-full pt-3 pb-2 cursor-pointer transition-colors focus:outline-hidden"
                             >
-                                {/* Ikon Statis (mengecil & menghilang halus saat tab aktif) */}
-                                <div
-                                    className={
-                                        "transition-all duration-200 mb-1 " +
-                                        (item.active ? "opacity-0 scale-50 -translate-y-2" : "opacity-100 scale-100")
-                                    }
+                                {/* Ikon Statis: Mengangkat & mengecil halus saat tab menjadi aktif */}
+                                <motion.div
+                                    animate={{
+                                        opacity: isActive ? 0 : 1,
+                                        scale: isActive ? 0.4 : 1,
+                                        y: isActive ? -10 : 0,
+                                    }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 400,
+                                        damping: 28,
+                                    }}
+                                    className="text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
                                 >
-                                    <Icon className="w-5 h-5" />
-                                </div>
+                                    <Icon className="w-5 h-5 stroke-[1.9]" />
+                                </motion.div>
 
-                                {/* Label Teks Menu */}
-                                <span
-                                    className={
-                                        "text-[10px] tracking-tight transition-all duration-200 " +
-                                        (item.active ? "font-bold text-[#1E5E35] translate-y-0.5" : "font-medium text-gray-500")
-                                    }
-                                >
-                                    {item.label}
-                                </span>
-                            </button>
+                                {/* Label Teks Menu dengan Micro-Interaction */}
+                                <div className="flex flex-col items-center justify-center h-4">
+                                    <motion.span
+                                        animate={{
+                                            y: isActive ? 1 : 0,
+                                            scale: isActive ? 1.05 : 1,
+                                        }}
+                                        transition={{
+                                            type: "spring",
+                                            stiffness: 400,
+                                            damping: 25,
+                                        }}
+                                        className={`text-[10px] tracking-tight leading-none ${
+                                            isActive
+                                                ? "font-bold text-[#15803d] dark:text-emerald-400"
+                                                : "font-medium text-gray-500 dark:text-gray-400"
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </motion.span>
+
+                                    {/* Titik Aksen Aktif Kecil */}
+                                    {isActive && (
+                                        <motion.span
+                                            layoutId="activeTabDot"
+                                            className="w-1 h-1 rounded-full bg-[#15803d] dark:bg-emerald-400 mt-1"
+                                            transition={{
+                                                type: "spring",
+                                                stiffness: 500,
+                                                damping: 30,
+                                            }}
+                                        />
+                                    )}
+                                </div>
+                            </motion.button>
                         );
                     })}
                 </div>
