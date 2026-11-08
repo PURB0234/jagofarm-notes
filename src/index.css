@@ -26,6 +26,7 @@ body {
 } */
 
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #f8fafc;
@@ -36,6 +37,15 @@ body {
   --primary: #168052;
   --primary-hover: #106841;
   --primary-soft: #e8f4ec;
+}
+
+.dark {
+  --background: #0b1110;
+  --surface: #141c19;
+  --foreground: #f0fdf4;
+  --muted: #94a3b8;
+  --border: #1e2d27;
+  --primary-soft: #0d281e;
 }
 
 * {
@@ -377,7 +387,7 @@ a {
   header,
   nav,
   .no-print,
-  .app-shell > header,
+  .app-shell>header,
   .sidebar,
   button,
   .topbar {

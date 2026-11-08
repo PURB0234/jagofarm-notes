@@ -85,7 +85,7 @@ export default function CatatanPekerjaanPage() {
     }
 
     return (
-        <main className="max-w-7xl mx-auto space-y-6">
+        <main className="w-full mx-auto space-y-6">
             <CatatanWorkspace
                 catatans={catatans}
                 initialId={id}

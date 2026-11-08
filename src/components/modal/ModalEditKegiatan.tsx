@@ -293,36 +293,36 @@ export default function ModalEditKegiatan({
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-2xs">
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/50 backdrop-blur-2xs">
+            <div className="bg-white rounded-t-2xl sm:rounded-2xl border border-gray-200 shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in duration-150">
                 {/* Header */}
-                <header className="flex items-start justify-between p-5 border-b border-gray-100 bg-slate-50/50">
+                <header className="flex items-start justify-between p-4 sm:p-5 border-b border-gray-100 bg-slate-50/50">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center shrink-0">
-                            <FileText className="w-5 h-5" />
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center shrink-0">
+                            <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                         <div>
                             <div className="flex items-center gap-2">
-                                <h2 className="text-base font-bold text-gray-900">Edit Catatan & Kegiatan</h2>
+                                <h2 className="text-sm sm:text-base font-bold text-gray-900">Edit Catatan & Kegiatan</h2>
                                 <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-gray-200 bg-gray-100 text-gray-600 font-bold uppercase">
                                     ID-{activeItem.id.slice(0, 8).toUpperCase()}
                                 </span>
                             </div>
-                            <p className="text-xs text-gray-500 mt-0.5">
+                            <p className="text-[11px] sm:text-xs text-gray-500 mt-0.5">
                                 Perubahan data otomatis tersinkron ke seluruh modul sistem.
                             </p>
                         </div>
                     </div>
                     <button
                         onClick={onClose}
-                        className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition"
+                        className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition cursor-pointer"
                     >
                         <X className="w-5 h-5" />
                     </button>
                 </header>
 
                 {/* Form Isi */}
-                <form id="form-edit-kegiatan" onSubmit={handleSubmit} className="p-5 overflow-y-auto space-y-4 text-xs">
+                <form id="form-edit-kegiatan" onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto space-y-4 text-xs">
                     {/* Judul Kegiatan */}
                     <div>
                         <label className="block font-bold text-gray-800 mb-1.5">

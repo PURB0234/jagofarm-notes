@@ -71,11 +71,10 @@ export default function TimelineFilterBar({
                                 key={st.label}
                                 type="button"
                                 onClick={() => onSelectStaff(st.label)}
-                                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition cursor-pointer select-none ${
-                                    selectedStaff === st.label
+                                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition cursor-pointer select-none ${selectedStaff === st.label
                                         ? "bg-slate-900 text-white"
                                         : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
-                                }`}
+                                    }`}
                             >
                                 {st.text}
                             </button>

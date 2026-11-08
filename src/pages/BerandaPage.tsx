@@ -33,7 +33,7 @@ export default function BerandaPage() {
     }
 
     return (
-        <main className="max-w-7xl mx-auto space-y-6">
+        <main className="w-full mx-auto space-y-6">
             {/* 1. Header Greeting & Dynamic Date */}
             <BerandaHero
                 roleLabel={roleLabel}
@@ -42,13 +42,13 @@ export default function BerandaPage() {
             />
 
             {/* 2. Metrik Telemetri IoT Greenhouse */}
-            <BerandaMetrics panenCount={stats.panen} />
+            {/* <BerandaMetrics panenCount={stats.panen} /> */}
 
             {/* 3. Grid Workspace Utama: Kiri (Pekerjaan & Catatan) | Kanan (Jadwal & Tim) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 {/* Kolom Kiri */}
                 <div className="lg:col-span-7 space-y-6">
-                    <BerandaTugasAktif tugas={tugasBerjalan} />
+                    {/* <BerandaTugasAktif tugas={tugasBerjalan} /> */}
                     <BerandaCatatanTerbaru catatan={catatanTerbaru} />
                 </div>
 

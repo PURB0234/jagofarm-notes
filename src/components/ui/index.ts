@@ -11,3 +11,6 @@ export type { SelectProps } from "./Select";
 
 export { default as SegmentedControl } from "./SegmentedControl";
 export type { SegmentOption } from "./SegmentedControl";
+
+export { default as JagoFarmIcon } from "./JagoFarmIcon";
+export type { JagoFarmIconProps } from "./JagoFarmIcon";

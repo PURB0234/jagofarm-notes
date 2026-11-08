@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { BULAN_NAMES } from "@/lib/utils/date";
 import type { MonthOption } from "@/types/common";
 import TimelineFilterBar from "../filter/TimelineFilterBar";
+import Select from "@/components/ui/Select";
 
 type KalenderNavProps = {
     monday: Date;
@@ -68,22 +69,15 @@ export default function KalenderNav({
                     </span>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-1.5 text-xs">
-                    <span className="text-gray-500 mr-1 text-[11px]">Petugas:</span>
-                    {staffList.map((st) => (
-                        <button
-                            key={st.label}
-                            type="button"
-                            onClick={() => onSelectStaff(st.label)}
-                            className={`px-2.5 py-1 rounded-lg text-xs font-medium transition cursor-pointer ${
-                                selectedStaff === st.label
-                                    ? "bg-slate-900 text-white"
-                                    : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
-                            }`}
-                        >
-                            {st.text}
-                        </button>
-                    ))}
+                <div className="flex items-center gap-1.5 text-xs">
+                    <span className="text-gray-500 text-[11px]">Petugas:</span>
+                    <Select value={selectedStaff} onChange={(e) => onSelectStaff(e.target.value)}>
+                        {staffList.map((st) => (
+                            <option key={st.label} value={st.label}>
+                                {st.text}
+                            </option>
+                        ))}
+                    </Select>
                 </div>
             </div>
 

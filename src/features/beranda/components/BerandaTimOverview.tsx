@@ -52,17 +52,6 @@ export default function BerandaTimOverview({
                     </div>
                 )}
             </Card>
-
-            {/* Protocol Standard Note */}
-            <div className="flex items-start gap-3 p-3.5 bg-white border border-gray-200 rounded-xl text-xs text-gray-600 shadow-2xs">
-                <ShieldCheck className="w-4 h-4 text-emerald-700 mt-0.5 shrink-0" />
-                <div>
-                    <strong className="text-gray-900 block mb-0.5 font-semibold">
-                        Standar Operasional Lapangan:
-                    </strong>
-                    Pencatatan EC dan pengurasan jalur dosing dilakukan rutin pada rotasi pagi. Pastikan seluruh foto bukti dokumentasi terunggah.
-                </div>
-            </div>
         </section>
     );
 }

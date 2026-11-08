@@ -4,11 +4,14 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Button from "../ui/Button";
-import { RotateCcw, Plus, LeafIcon } from "lucide-react";
+import { RotateCcw, Plus } from "lucide-react";
 import LogoutButton from "../LogoutButton";
 import { createClient } from "@/lib/supabase";
 import ModalTambahKegiatan from "../modal/ModalTambahKegiatan";
 import type { UserRole } from "@/lib/auth/permissions";
+import JagoFarmIcon from "../ui/JagoFarmIcon";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface OnlineUser {
     id: string;
@@ -16,12 +19,18 @@ interface OnlineUser {
     avatar?: string;
 }
 
-export default function TopBar({ role }: { role?: UserRole }) {
+type TopBarProps = {
+    role?: UserRole;
+    onOpenTambah?: () => void;
+};
+
+export default function TopBar({ role, onOpenTambah }: TopBarProps) {
     const location = useLocation();
     const pathname = location.pathname;
     const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [syncState, setSyncState] = useState<"idle" | "syncing" | "synced">("idle");
+    const { theme, toggleTheme } = useTheme();
 
     const navigation = [
         { label: "Beranda", href: "/beranda" },
@@ -112,15 +121,15 @@ export default function TopBar({ role }: { role?: UserRole }) {
     ];
 
     return (
-        <header className="bg-white w-full h-15 border-b border-gray-200 px-6 flex flex-row items-center justify-between">
+        <header className="bg-white/95 backdrop-blur-xs sticky top-0 z-30 w-full h-14 sm:h-15 border-b border-gray-200 px-4 sm:px-6 flex flex-row items-center justify-between">
             {/* KIRI: Logo + Nav */}
-            <div className="flex flex-row items-center gap-8 h-full">
+            <div className="flex flex-row items-center gap-4 sm:gap-8 h-full">
                 <div className="flex flex-row items-center gap-2">
-                    <LeafIcon className="text-green-800 w-5 h-5" />
-                    <h3 className="font-bold text-gray-900">JagoFarm-Keun</h3>
+                    <JagoFarmIcon className="text-green-800 w-5 h-5" />
+                    <h3 className="font-bold text-gray-900 tracking-tight text-sm sm:text-base">JagoFarm-Keun</h3>
                 </div>
 
-                <nav className="flex flex-row gap-2 items-center h-full">
+                <nav className="hidden md:flex flex-row gap-2 items-center h-full">
                     {navigation.map((item) => {
                         const active =
                             pathname === item.href ||
@@ -143,17 +152,30 @@ export default function TopBar({ role }: { role?: UserRole }) {
             </div>
 
             {/* KANAN: Aksi + Realtime Badges */}
-            <div className="flex flex-row items-center gap-4">
-                <div className="flex flex-row gap-3 items-center pr-4 border-r border-gray-300">
+            <div className="flex flex-row items-center gap-2.5 sm:gap-4">
+                <div className="flex flex-row gap-2 sm:gap-3 items-center pr-2.5 sm:pr-4 border-r border-gray-300">
+                    <button
+                        type="button"
+                        onClick={toggleTheme}
+                        title={theme === "dark" ? "Ganti ke Mode Terang" : "Ganti ke Mode Gelap"}
+                        className="p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer select-none"
+                    >
+                        {theme === "dark" ? (
+                            <Sun className="w-3.5 h-3.5 text-amber-400" />
+                        ) : (
+                            <Moon className="w-3.5 h-3.5 text-gray-600" />
+                        )}
+                    </button>
+
                     <Button
                         type="button"
                         onClick={handleSync}
                         disabled={syncState === "syncing"}
-                        className="!px-2.5 !py-1 !text-xs transition-all cursor-pointer disabled:opacity-60"
+                        className="!px-2 sm:!px-2.5 !py-1 !text-xs transition-all cursor-pointer disabled:opacity-60"
                         variant="sync"
                         title="Klik untuk menyinkronkan data terbaru"
                     >
-                        <span>
+                        <span className="hidden sm:inline">
                             {syncState === "syncing"
                                 ? "Menyinkronkan..."
                                 : syncState === "synced"
@@ -166,8 +188,16 @@ export default function TopBar({ role }: { role?: UserRole }) {
                         />
                     </Button>
 
-                    {/* <Button className="!px-2.5 !py-1 !text-xs" variant="addSchedule"><Plus className="w-3 h-3" />Tambah Jadwal</Button> */}
-                    <Button className="!px-2.5 !py-1 !text-xs" variant="addNote" onClick={() => setIsModalOpen(true)}><Plus className="w-3 h-3" />Tambah Catatan</Button>
+                    <div className="hidden md:block">
+                        <Button
+                            className="!px-2.5 !py-1 !text-xs"
+                            variant="addNote"
+                            onClick={onOpenTambah || (() => setIsModalOpen(true))}
+                        >
+                            <Plus className="w-3 h-3" />
+                            <span>Tambah Catatan</span>
+                        </Button>
+                    </div>
                 </div>
 
                 {/* Badge Realtime Akun */}
@@ -207,7 +237,7 @@ export default function TopBar({ role }: { role?: UserRole }) {
 
                 <LogoutButton />
             </div>
-            {isModalOpen && (
+            {!onOpenTambah && isModalOpen && (
                 <ModalTambahKegiatan
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}

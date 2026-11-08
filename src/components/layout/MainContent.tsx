@@ -9,7 +9,7 @@ export default function MainContent({
     children,
 }: MainContentProps) {
     return (
-        <main className="main-content">
+        <main className="main-content pb-28 md:pb-6">
             {children}
         </main>
     );

@@ -109,33 +109,33 @@ export default function LaporanPdfPrint({
                                     : 1;
 
                                 return (
-                                <tr key={item.id} className="border-b border-gray-400">
-                                    <td className="p-2 border border-black text-center font-medium">{idx + 1}</td>
-                                    <td className="p-2 border border-black font-semibold whitespace-nowrap">
-                                        {isMultiDay ? startStr + " s/d " + endStr : item.tanggal}
-                                    </td>
-                                    <td className="p-2 border border-black whitespace-nowrap">
-                                        {isMultiDay ? diffDays + " hari (Siklus)" : item.waktu_mulai.slice(0, 5) + " - " + item.waktu_selesai.slice(0, 5)}
-                                    </td>
-                                    <td className="p-2 border border-black">
-                                        <div className="font-bold text-black">{item.nama_kegiatan}</div>
-                                        {item.catatan && (
-                                            <div className="text-[10px] text-gray-700 italic mt-0.5">
-                                                &quot;{item.catatan}&quot;
-                                            </div>
-                                        )}
-                                        {item.tag && (
-                                            <span className="inline-block mt-1 text-[9px] border border-black px-1 rounded font-semibold uppercase">
-                                                {item.tag}
-                                            </span>
-                                        )}
-                                    </td>
-                                    <td className="p-2 border border-black font-medium">{item.penanggung_jawab_nama}</td>
-                                    <td className="p-2 border border-black">{item.lokasi || "-"}</td>
-                                    <td className="p-2 border border-black text-center font-bold">
-                                        {item.status === "selesai" ? "SELESAI" : "TERJADWAL"}
-                                    </td>
-                                </tr>
+                                    <tr key={item.id} className="border-b border-gray-400">
+                                        <td className="p-2 border border-black text-center font-medium">{idx + 1}</td>
+                                        <td className="p-2 border border-black font-semibold whitespace-nowrap">
+                                            {isMultiDay ? startStr + " s/d " + endStr : item.tanggal}
+                                        </td>
+                                        <td className="p-2 border border-black whitespace-nowrap">
+                                            {isMultiDay ? diffDays + " hari (Siklus)" : item.waktu_mulai.slice(0, 5) + " - " + item.waktu_selesai.slice(0, 5)}
+                                        </td>
+                                        <td className="p-2 border border-black">
+                                            <div className="font-bold text-black">{item.nama_kegiatan}</div>
+                                            {item.catatan && (
+                                                <div className="text-[10px] text-gray-700 italic mt-0.5">
+                                                    &quot;{item.catatan}&quot;
+                                                </div>
+                                            )}
+                                            {item.tag && (
+                                                <span className="inline-block mt-1 text-[9px] border border-black px-1 rounded font-semibold uppercase">
+                                                    {item.tag}
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td className="p-2 border border-black font-medium">{item.penanggung_jawab_nama}</td>
+                                        <td className="p-2 border border-black">{item.lokasi || "-"}</td>
+                                        <td className="p-2 border border-black text-center font-bold">
+                                            {item.status === "selesai" ? "SELESAI" : "TERJADWAL"}
+                                        </td>
+                                    </tr>
                                 );
                             })
                         )}
@@ -144,7 +144,7 @@ export default function LaporanPdfPrint({
             </div>
 
             {/* Lembar Tanda Tangan & Pengesahan */}
-            <div className="grid grid-cols-2 gap-12 mt-12 pt-4 text-xs">
+            {/* <div className="grid grid-cols-2 gap-12 mt-12 pt-4 text-xs">
                 <div className="text-center">
                     <p className="text-gray-600 mb-16">Disiapkan & Dilaporkan Oleh,</p>
                     <div className="w-48 mx-auto border-b border-black"></div>
@@ -158,7 +158,7 @@ export default function LaporanPdfPrint({
                     <strong className="block mt-1 text-black">Supervisor / Farm Manager</strong>
                     <span className="text-[10px] text-gray-500">Manajemen Budidaya & Greenhouse</span>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

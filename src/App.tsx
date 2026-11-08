@@ -10,39 +10,42 @@ import AuthCallbackPage from "@/pages/AuthCallbackPage";
 import BerandaPage from "@/pages/BerandaPage";
 import CatatanPekerjaanPage from "@/pages/CatatanPekerjaanPage";
 import AdminPage from "@/pages/AdminPage";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 export default function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Public Auth Routes */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/auth/callback" element={<AuthCallbackPage />} />
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Public Auth Routes */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/auth/callback" element={<AuthCallbackPage />} />
 
-          {/* Protected Workspace Routes */}
-          <Route element={<WorkspaceLayout />}>
-            <Route path="/" element={<Navigate to="/beranda" replace />} />
-            <Route path="/beranda" element={<BerandaPage />} />
-            <Route path="/catatan-pekerjaan" element={<CatatanPekerjaanPage />} />
-            <Route
-              path="/jadwal-tim"
-              element={<Navigate to="/catatan-pekerjaan?view=kalender" replace />}
-            />
+            {/* Protected Workspace Routes */}
+            <Route element={<WorkspaceLayout />}>
+              <Route path="/" element={<Navigate to="/beranda" replace />} />
+              <Route path="/beranda" element={<BerandaPage />} />
+              <Route path="/catatan-pekerjaan" element={<CatatanPekerjaanPage />} />
+              <Route
+                path="/jadwal-tim"
+                element={<Navigate to="/catatan-pekerjaan?view=kalender" replace />}
+              />
 
-            {/* Admin Protected Routes */}
-            <Route element={<AdminRoute />}>
-              <Route path="/admin" element={<AdminPage />} />
+              {/* Admin Protected Routes */}
+              <Route element={<AdminRoute />}>
+                <Route path="/admin" element={<AdminPage />} />
+              </Route>
             </Route>
-          </Route>
 
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/beranda" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/beranda" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

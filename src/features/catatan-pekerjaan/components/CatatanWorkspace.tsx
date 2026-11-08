@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
     FileText,
     Calendar,
@@ -31,10 +32,20 @@ export default function CatatanWorkspace({
     currentUser: { id: string; role: string; name: string };
     onRefresh?: () => void;
 }) {
+    const [, setSearchParams] = useSearchParams();
     const [viewMode, setViewMode] = useState<ViewMode>(initialView);
     const [selectedId, setSelectedId] = useState(initialId || catatans[0]?.id);
     const [search, setSearch] = useState("");
     const [sortBy, setSortBy] = useState<SortOption>("semua");
+
+    const handleViewModeChange = (mode: ViewMode) => {
+        setViewMode(mode);
+        setSearchParams((prev) => {
+            const next = new URLSearchParams(prev);
+            next.set("view", mode);
+            return next;
+        }, { replace: true });
+    };
 
     // Modal States
     const [isTambahModalOpen, setIsTambahModalOpen] = useState(false);
@@ -123,11 +134,11 @@ export default function CatatanWorkspace({
 
                 {/* Sisi Kanan: Switcher 3 Mode + Tombol Tambah & Cetak */}
                 <div className="flex flex-wrap items-center gap-2.5">
-                    {/* Switcher 3 Mode */}
-                    <div className="flex items-center bg-gray-100 p-0.5 rounded-lg border border-gray-200 text-xs font-medium">
+                    {/* Switcher 3 Mode (Desktop view) */}
+                    <div className="hidden md:flex items-center bg-gray-100 p-0.5 rounded-lg border border-gray-200 text-xs font-medium">
                         <button
                             type="button"
-                            onClick={() => setViewMode("catatan")}
+                            onClick={() => handleViewModeChange("catatan")}
                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition cursor-pointer ${viewMode === "catatan"
                                 ? "bg-white text-gray-900 shadow-2xs font-semibold"
                                 : "text-gray-600 hover:text-gray-900"
@@ -138,7 +149,7 @@ export default function CatatanWorkspace({
                         </button>
                         <button
                             type="button"
-                            onClick={() => setViewMode("kalender")}
+                            onClick={() => handleViewModeChange("kalender")}
                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition cursor-pointer ${viewMode === "kalender"
                                 ? "bg-white text-gray-900 shadow-2xs font-semibold"
                                 : "text-gray-600 hover:text-gray-900"
@@ -149,7 +160,7 @@ export default function CatatanWorkspace({
                         </button>
                         <button
                             type="button"
-                            onClick={() => setViewMode("gantt")}
+                            onClick={() => handleViewModeChange("gantt")}
                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition cursor-pointer ${viewMode === "gantt"
                                 ? "bg-white text-gray-900 shadow-2xs font-semibold"
                                 : "text-gray-600 hover:text-gray-900"
