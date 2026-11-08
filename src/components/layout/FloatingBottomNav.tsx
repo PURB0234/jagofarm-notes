@@ -1,13 +1,6 @@
-import { useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Home, FileText, Calendar, BarChart3 } from "lucide-react";
-import {
-    motion,
-    useMotionValue,
-    useSpring,
-    useTransform,
-    AnimatePresence,
-} from "motion/react";
 
 // Geometri dan dimensi kurva navbar
 const NAV_WIDTH = 342;
@@ -58,6 +51,55 @@ function getConcaveNavPath(X: number): string {
         `C 0 ${RK} ${RK} 0 ${CORNER_RADIUS} 0`,
         "Z",
     ].join(" ");
+}
+
+/**
+ * Hook fisika pegas (spring physics) 60/120fps murni dengan requestAnimationFrame
+ * Memberikan pergerakan dinamis, elastis, dan bebas dependensi eksternal.
+ */
+function useSpringPhysics(target: number, stiffness = 320, damping = 26, mass = 1) {
+    const [current, setCurrent] = useState<number>(target);
+    const currentRef = useRef<number>(target);
+    const targetRef = useRef<number>(target);
+    const velocityRef = useRef<number>(0);
+    const animIdRef = useRef<number | null>(null);
+
+    targetRef.current = target;
+
+    useEffect(() => {
+        let lastTime = performance.now();
+
+        const step = (time: number) => {
+            const dt = Math.min((time - lastTime) / 1000, 0.032);
+            lastTime = time;
+
+            const displacement = currentRef.current - targetRef.current;
+            const force = -stiffness * displacement - damping * velocityRef.current;
+            const acceleration = force / mass;
+
+            velocityRef.current += acceleration * dt;
+            currentRef.current += velocityRef.current * dt;
+
+            setCurrent(currentRef.current);
+
+            if (Math.abs(displacement) > 0.1 || Math.abs(velocityRef.current) > 0.1) {
+                animIdRef.current = requestAnimationFrame(step);
+            } else {
+                currentRef.current = targetRef.current;
+                setCurrent(targetRef.current);
+                animIdRef.current = null;
+            }
+        };
+
+        if (animIdRef.current) cancelAnimationFrame(animIdRef.current);
+        animIdRef.current = requestAnimationFrame(step);
+
+        return () => {
+            if (animIdRef.current) cancelAnimationFrame(animIdRef.current);
+        };
+    }, [target, stiffness, damping, mass]);
+
+    return current;
 }
 
 export default function FloatingBottomNav() {
@@ -115,20 +157,11 @@ export default function FloatingBottomNav() {
     const activeIndex = getActiveIndex();
     const targetX = TAB_CENTERS[activeIndex] ?? TAB_CENTERS[0];
 
-    // Spring physics untuk pergerakan horizontal yang natural dan elastis
-    const activeX = useMotionValue(targetX);
-    const xSpring = useSpring(activeX, {
-        stiffness: 380,
-        damping: 28,
-        mass: 0.75,
-    });
+    // Spring physics murni per-frame
+    const springX = useSpringPhysics(targetX, 340, 27, 0.9);
 
-    useEffect(() => {
-        activeX.set(targetX);
-    }, [targetX, activeX]);
-
-    // Path SVG dinamis yang berevolusi secara real-time mengikuti spring physics
-    const navPath = useTransform(xSpring, (currentX) => getConcaveNavPath(currentX));
+    // SVG path yang terbarui otomatis setiap frame spring
+    const navPath = getConcaveNavPath(springX);
 
     const ActiveIcon = navItems[activeIndex].icon;
 
@@ -138,12 +171,12 @@ export default function FloatingBottomNav() {
             className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] inset-x-0 mx-auto w-[342px] max-w-[calc(100vw-24px)] z-40 md:hidden select-none"
         >
             <div className="relative w-full h-[64px]">
-                {/* 1. Latar Belakang SVG dengan Lekukan Cekung Organik yang Mengikuti Tab */}
+                {/* 1. Latar Belakang SVG dengan Lekukan Cekung Organik yang Mengikuti Posisi Spring */}
                 <svg
                     viewBox={`0 0 ${NAV_WIDTH} ${NAV_HEIGHT}`}
                     className="absolute inset-0 w-full h-full overflow-visible pointer-events-none drop-shadow-[0_12px_24px_rgba(0,0,0,0.08)] dark:drop-shadow-[0_14px_30px_rgba(0,0,0,0.55)]"
                 >
-                    <motion.path
+                    <path
                         d={navPath}
                         className="fill-white dark:fill-[#141c19] stroke-gray-200/90 dark:stroke-[#273830]"
                         strokeWidth="1.2"
@@ -151,42 +184,23 @@ export default function FloatingBottomNav() {
                 </svg>
 
                 {/* 2. Indikator Lingkaran Aktif Melayang (Elevated Circular Badge) */}
-                <motion.div
-                    style={{ x: xSpring }}
-                    className="absolute -top-[19px] left-0 pointer-events-none z-20"
+                <div
+                    style={{
+                        transform: `translate3d(${springX}px, 0, 0)`,
+                    }}
+                    className="absolute -top-[19px] left-0 pointer-events-none z-20 will-change-transform"
                 >
                     {/* Offset -50% agar lingkaran 50px tepat simetris di titik tengah X */}
                     <div className="-translate-x-1/2 flex items-center justify-center">
-                        {/* Animasi mengambang mikro (subtle floating levitation) */}
-                        <motion.div
-                            animate={{ y: [0, -2, 0] }}
-                            transition={{
-                                repeat: Infinity,
-                                duration: 3.2,
-                                ease: "easeInOut",
-                            }}
-                            className="relative w-[50px] h-[50px] rounded-full bg-linear-to-b from-[#188d5b] to-[#126b40] dark:from-[#22c55e] dark:to-[#15803d] text-white flex items-center justify-center border-[2.5px] border-white dark:border-[#141c19] ring-2 ring-emerald-500/25 dark:ring-emerald-400/20 shadow-[0_8px_18px_-2px_rgba(22,128,82,0.45)] dark:shadow-[0_8px_20px_-2px_rgba(34,197,94,0.4)]"
+                        {/* Bulatan aktif dengan aksen visual halus */}
+                        <div
+                            key={activeIndex}
+                            className="relative w-[50px] h-[50px] rounded-full bg-linear-to-b from-[#188d5b] to-[#126b40] dark:from-[#22c55e] dark:to-[#15803d] text-white flex items-center justify-center border-[2.5px] border-white dark:border-[#141c19] ring-2 ring-emerald-500/25 dark:ring-emerald-400/20 shadow-[0_8px_18px_-2px_rgba(22,128,82,0.45)] dark:shadow-[0_8px_20px_-2px_rgba(34,197,94,0.4)] animate-in zoom-in-75 duration-200"
                         >
-                            {/* Ikon di dalam bulatan aktif dengan transisi pop halus */}
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={navItems[activeIndex].id}
-                                    initial={{ scale: 0.5, opacity: 0, rotate: -15 }}
-                                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                                    exit={{ scale: 0.5, opacity: 0, rotate: 15 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 450,
-                                        damping: 24,
-                                    }}
-                                    className="flex items-center justify-center"
-                                >
-                                    <ActiveIcon className="w-5 h-5 stroke-[2.3]" />
-                                </motion.div>
-                            </AnimatePresence>
-                        </motion.div>
+                            <ActiveIcon className="w-5 h-5 stroke-[2.3]" />
+                        </div>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* 3. Baris Tombol Tab Navigasi Interaktif */}
                 <div className="relative z-10 grid grid-cols-4 h-full px-[15px]">
@@ -195,66 +209,41 @@ export default function FloatingBottomNav() {
                         const isActive = item.active;
 
                         return (
-                            <motion.button
+                            <button
                                 key={item.id}
                                 type="button"
                                 onClick={() => navigate(item.path)}
-                                whileHover={{ y: isActive ? 0 : -2 }}
-                                whileTap={{ scale: 0.93 }}
-                                className="relative flex flex-col items-center justify-between h-full pt-3 pb-2 cursor-pointer transition-colors focus:outline-hidden"
+                                className="relative flex flex-col items-center justify-between h-full pt-3 pb-2 cursor-pointer transition-transform duration-150 hover:scale-105 active:scale-92 focus:outline-hidden"
                             >
                                 {/* Ikon Statis: Mengangkat & mengecil halus saat tab menjadi aktif */}
-                                <motion.div
-                                    animate={{
-                                        opacity: isActive ? 0 : 1,
-                                        scale: isActive ? 0.4 : 1,
-                                        y: isActive ? -10 : 0,
-                                    }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 400,
-                                        damping: 28,
-                                    }}
-                                    className="text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                                <div
+                                    className={`transition-all duration-300 ease-out ${
+                                        isActive
+                                            ? "opacity-0 scale-40 -translate-y-3"
+                                            : "opacity-100 scale-100 translate-y-0 text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                                    }`}
                                 >
                                     <Icon className="w-5 h-5 stroke-[1.9]" />
-                                </motion.div>
+                                </div>
 
                                 {/* Label Teks Menu dengan Micro-Interaction */}
                                 <div className="flex flex-col items-center justify-center h-4">
-                                    <motion.span
-                                        animate={{
-                                            y: isActive ? 1 : 0,
-                                            scale: isActive ? 1.05 : 1,
-                                        }}
-                                        transition={{
-                                            type: "spring",
-                                            stiffness: 400,
-                                            damping: 25,
-                                        }}
-                                        className={`text-[10px] tracking-tight leading-none ${
+                                    <span
+                                        className={`text-[10px] tracking-tight leading-none transition-all duration-200 ${
                                             isActive
-                                                ? "font-bold text-[#15803d] dark:text-emerald-400"
+                                                ? "font-bold text-[#15803d] dark:text-emerald-400 scale-105 translate-y-0.5"
                                                 : "font-medium text-gray-500 dark:text-gray-400"
                                         }`}
                                     >
                                         {item.label}
-                                    </motion.span>
+                                    </span>
 
                                     {/* Titik Aksen Aktif Kecil */}
                                     {isActive && (
-                                        <motion.span
-                                            layoutId="activeTabDot"
-                                            className="w-1 h-1 rounded-full bg-[#15803d] dark:bg-emerald-400 mt-1"
-                                            transition={{
-                                                type: "spring",
-                                                stiffness: 500,
-                                                damping: 30,
-                                            }}
-                                        />
+                                        <span className="w-1 h-1 rounded-full bg-[#15803d] dark:bg-emerald-400 mt-1 animate-in zoom-in duration-200" />
                                     )}
                                 </div>
-                            </motion.button>
+                            </button>
                         );
                     })}
                 </div>

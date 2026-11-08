@@ -26,7 +26,7 @@ body {
 } */
 
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+@variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #f8fafc;
